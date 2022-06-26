@@ -8,6 +8,21 @@ import { combineAbortSignals } from '@flemist/async-utils';
 import 'worker_threads';
 import '../common/route.mjs';
 
+function serializeError(error) {
+    return {
+        error,
+        props: error instanceof Error ? Object.assign({}, error) : void 0,
+    };
+}
+function deserializeError(data) {
+    if (data.error instanceof Error) {
+        if (data.props.name === 'AbortError') {
+            return new AbortError(data.error.message, data.props.reason);
+        }
+        return Object.assign(data.error, data.props);
+    }
+    return data.error;
+}
 function workerFunctionServer({ eventBus, task, name, }) {
     const abortMap = new Map();
     return eventBus.subscribe((event) => __awaiter(this, void 0, void 0, function* () {
@@ -75,8 +90,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
                         emitValue({
                             data: {
                                 event: 'error',
-                                error,
-                                props: error instanceof Error ? Object.assign({}, error) : void 0,
+                                error: serializeError(error),
                             },
                         });
                     }
@@ -176,14 +190,7 @@ function workerFunctionClient({ eventBus, name, }) {
                                 console.log('started: ' + name);
                                 break;
                             case 'error':
-                                if (data.data.error instanceof Error) {
-                                    if (data.data.props.name === 'AbortError') {
-                                        reject(new AbortError(data.data.error.message, data.data.props.reason));
-                                        break;
-                                    }
-                                    Object.assign(data.data.error, data.data.props);
-                                }
-                                reject(data.data.error);
+                                deserializeError(data.data.error);
                                 break;
                             case 'callback':
                                 callback({

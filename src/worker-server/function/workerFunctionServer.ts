@@ -7,6 +7,28 @@ import {workerSubscribe} from '../request/workerSubscribe'
 import {AbortError, AbortControllerFast, IAbortSignalFast} from '@flemist/abort-controller-fast'
 import {combineAbortSignals} from '@flemist/async-utils'
 
+type ErrorSerialized = {
+  error: any,
+  props: any,
+}
+
+function serializeError(error: any): ErrorSerialized {
+  return {
+    error,
+    props: error instanceof Error ? {...error} : void 0,
+  }
+}
+
+function deserializeError(data: ErrorSerialized) {
+  if (data.error instanceof Error) {
+    if (data.props.name === 'AbortError') {
+      return new AbortError(data.error.message, data.props.reason)
+    }
+    return Object.assign(data.error, data.props)
+  }
+  return data.error
+}
+
 export type PromiseOrValue<T> = Promise<T> | T
 
 export type TaskFunc<TRequest, TResult, TCallbackData> = (
@@ -46,8 +68,7 @@ export type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
   result: TResult,
 } | {
   event: 'error',
-  error: any,
-  props: any
+  error: ErrorSerialized,
 }
 
 export type AbortFunc = (reason: any) => void
@@ -151,8 +172,7 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
             emitValue({
               data: {
                 event: 'error',
-                error,
-                props: error instanceof Error ? {...error} : void 0,
+                error: serializeError(error),
               },
             })
           } finally {
@@ -280,14 +300,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
                 console.log('started: ' + name)
                 break
               case 'error':
-                if (data.data.error instanceof Error) {
-                  if (data.data.props.name === 'AbortError') {
-                    reject(new AbortError(data.data.error.message, data.data.props.reason))
-                    break
-                  }
-                  Object.assign(data.data.error, data.data.props)
-                }
-                reject(data.data.error)
+                deserializeError(data.data.error)
                 break
               case 'callback':
                 callback({
