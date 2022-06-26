@@ -5,7 +5,7 @@ import {workerToEventBus} from '../event-bus/workerToEventBus'
 import {eventBusToMessagePort} from '../event-bus/eventBusToMessagePort'
 import {TestFuncArgs} from './contracts'
 
-const worker1 = new Worker(path.resolve('./dist/worker-event-bus/test/worker1.cjs'))
+const worker1 = new Worker(path.resolve('./dist/worker-server/test/worker1.cjs'))
 const worker1EventBus = workerToEventBus(worker1)
 
 export const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
@@ -20,7 +20,7 @@ let func1Port = eventBusToMessagePort({
   },
 })
 const workerTransit = new Worker(
-  path.resolve('./dist/worker-event-bus/test/worker-transit.cjs'),
+  path.resolve('./dist/worker-server/test/worker-transit.cjs'),
   {
     workerData: {
       func1Port,

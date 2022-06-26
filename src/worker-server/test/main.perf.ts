@@ -2,7 +2,7 @@ import { rdtsc } from 'rdtsc'
 import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
 
-describe('worker-event-bus', function () {
+describe('worker-server > main', function () {
   this.timeout(60000)
 
   const testVariants = createTestVariants(function () {

@@ -16,7 +16,7 @@ let func1PortForward = eventBusToMessagePort({
   },
 })
 const worker2 = new Worker(
-  path.resolve('./dist/worker-event-bus/test/worker2.cjs'),
+  path.resolve('./dist/worker-server/test/worker2.cjs'),
   {
     workerData  : {func1Port: func1PortForward},
     transferList: [func1PortForward],
@@ -31,7 +31,7 @@ func1PortForward = eventBusToMessagePort({
   },
 })
 const worker3 = new Worker(
-  path.resolve('./dist/worker-event-bus/test/worker3.cjs'),
+  path.resolve('./dist/worker-server/test/worker3.cjs'),
   {
     workerData  : {func1Port: func1PortForward},
     transferList: [func1PortForward],
