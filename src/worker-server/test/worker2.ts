@@ -17,7 +17,7 @@ const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
 function func2(
   data: WorkerData<TestFuncArgs>,
   abortSignal: IAbortSignalFast,
-  callback: (data: WorkerData<any>) => void,
+  callback: (data: WorkerData) => void,
 ): WorkerFunctionServerResult<Float32Array> {
   callback(createTestFuncResult(data.data.value.slice()))
   data.data.value[1]++
