@@ -1,0 +1,9 @@
+import { threadId } from 'worker_threads';
+
+const idPrefix = process.pid + '_' + threadId + '_';
+let nextId = 1;
+function getNextId() {
+    return idPrefix + nextId++;
+}
+
+export { getNextId };
