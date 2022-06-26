@@ -16,13 +16,13 @@ describe('worker-server > main', function () {
   })
 
   it('simple', async function () {
-    console.log('variants: ' + await testVariants({
+    await testVariants({
       funcName: ['func2', 'func1', 'func3'],
       async   : [true, false],
       error   : [false, true],
       abort   : ['stop', 'error', false],
       assert  : [true],
-    }))
+    })()
   })
 
   it('stress', async function () {

@@ -5,9 +5,9 @@ import {CloseError} from '../errors/CloseError'
 export function messagePortToEventBus<TData = any>(messagePort: MessagePort): IWorkerEventBus<TData> {
   return {
     subscribe(callback: (event: WorkerEvent<TData>) => void): IUnsubscribe {
-      function onError(error: Error) {
-        console.error(error)
-      }
+      // function onError(error: Error) {
+      //   console.error(error)
+      // }
       function onMessageError(error: Error) {
         console.error(error)
       }
