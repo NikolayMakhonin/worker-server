@@ -3,7 +3,7 @@ import { createWorkerEvent } from '../common/createWorkerEvent.mjs';
 import { getNextId } from '../common/getNextId.mjs';
 import { workerSend } from '../request/workerSend.mjs';
 import { workerSubscribe } from '../request/workerSubscribe.mjs';
-import { AbortError, AbortControllerFast } from '@flemist/abort-controller-fast';
+import { AbortControllerFast, AbortError } from '@flemist/abort-controller-fast';
 import { combineAbortSignals } from '@flemist/async-utils';
 import 'worker_threads';
 import '../common/route.mjs';
@@ -103,14 +103,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
                     const abort = abortMap.get(requestId);
                     if (abort) {
                         abortMap.delete(requestId);
-                        if (event.data.data.reason instanceof Error) {
-                            if (event.data.data.props.name === 'AbortError') {
-                                abort(new AbortError(event.data.data.reason.message, event.data.data.props.reason));
-                                break;
-                            }
-                            Object.assign(event.data.data.reason, event.data.data.props);
-                        }
-                        abort(event.data.data.reason);
+                        abort(deserializeError(event.data.data.reason));
                     }
                     break;
                 }
@@ -163,8 +156,7 @@ function workerFunctionClient({ eventBus, name, }) {
                             data: {
                                 task: name,
                                 action: 'abort',
-                                reason,
-                                props: reason instanceof Error ? Object.assign({}, reason) : void 0,
+                                reason: serializeError(reason),
                             },
                             transferList: request === null || request === void 0 ? void 0 : request.transferList,
                         },
@@ -190,7 +182,7 @@ function workerFunctionClient({ eventBus, name, }) {
                                 console.log('started: ' + name);
                                 break;
                             case 'error':
-                                deserializeError(data.data.error);
+                                reject(deserializeError(data.data.error));
                                 break;
                             case 'callback':
                                 callback({

@@ -296,7 +296,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
                 console.log('started: ' + name)
                 break
               case 'error':
-                deserializeError(data.data.error)
+                reject(deserializeError(data.data.error))
                 break
               case 'callback':
                 callback({

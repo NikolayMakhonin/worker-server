@@ -15,8 +15,7 @@ describe('worker-server > main', function () {
     ])
   })
 
-  xit('simple', async function () {
-    // TODO
+  it('simple', async function () {
     await testVariants({
       funcName: ['func2', 'func1', 'func3'],
       async   : [true, false],
