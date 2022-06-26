@@ -121,25 +121,25 @@ export async function test({
   if (abort === 'error') {
     abortController.abort('abort')
   }
- else if (abort === 'stop') {
+  else if (abort === 'stop') {
     abortController.abort()
   }
 
   try {
     result = await promise
   }
- catch (err) {
+  catch (err) {
     assert.ok(err)
     if (typeof err === 'string') {
       errorMessage = err
     }
- else if (err instanceof AbortError) {
+    else if (err instanceof AbortError) {
       errorMessage = err.reason
     }
- else if (err.message.length <= 20) {
+    else if (err.message.length <= 20) {
       errorMessage = err.message
     }
- else {
+    else {
       throw err
     }
   }
@@ -156,10 +156,10 @@ export async function test({
       assert.strictEqual(result.transferList.length, 1)
       assert.strictEqual(result.transferList[0], result.data.buffer)
     }
- else if (error || abort) {
+    else if (error || abort) {
       assert.deepStrictEqual(result, void 0)
     }
- else {
+    else {
       assert.deepStrictEqual(result, {
         data        : void 0,
         transferList: void 0,

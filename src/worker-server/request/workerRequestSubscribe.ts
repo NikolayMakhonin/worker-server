@@ -53,7 +53,7 @@ export async function workerRequestSubscribe<
       })
     }
   }
- catch (err) {
+  catch (err) {
     unsubscribe()
     throw err
   }

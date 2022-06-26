@@ -32,7 +32,7 @@ export function eventBusConnect<TRequestData = any, TResponseData = any>({
         }
         client.emit(event)
       }
- catch (err) {
+      catch (err) {
         console.error(err)
         return
       }
@@ -45,7 +45,7 @@ export function eventBusConnect<TRequestData = any, TResponseData = any>({
       server.emit(event)
     })
   }
- catch (err) {
+  catch (err) {
     unsubscribe()
     throw err
   }
