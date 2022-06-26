@@ -34,7 +34,7 @@ describe('worker-event-bus', function () {
         error   : [false, true],
         abort   : [false, 'error', 'stop'],
         assert  : [true],
-      }))
+      })())
     }
     console.log('variants: ' + (await Promise.all(promises)).reduce((a, o) => a + o, 0))
   })
