@@ -157,7 +157,8 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
               })
 
               result = await promiseOrResult
-            } else {
+            }
+ else {
               result = promiseOrResult as WorkerData<TResult>
             }
 
@@ -168,14 +169,16 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
               },
               transferList: result?.transferList,
             })
-          } catch (error) {
+          }
+ catch (error) {
             emitValue({
               data: {
                 event: 'error',
                 error: serializeError(error),
               },
             })
-          } finally {
+          }
+ finally {
             abortMap.delete(requestId)
           }
           break
@@ -199,7 +202,8 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
           emitError(new Error('Unknown action: ' + (event.data.data as any).action))
           break
       }
-    } catch (error) {
+    }
+ catch (error) {
       console.error(error)
       emitError(error)
     }
@@ -280,7 +284,8 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
             },
             requestId,
           })
-        } catch (err) {
+        }
+ catch (err) {
           reject(err)
         }
       }
@@ -332,7 +337,8 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
           },
           requestId,
         })
-      } catch (err) {
+      }
+ catch (err) {
         abortController.abort(err)
         unsubscribe()
         throw err

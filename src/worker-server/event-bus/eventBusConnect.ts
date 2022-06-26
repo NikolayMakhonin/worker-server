@@ -31,7 +31,8 @@ export function eventBusConnect<TRequestData = any, TResponseData = any>({
           return
         }
         client.emit(event)
-      } catch (err) {
+      }
+ catch (err) {
         console.error(err)
         return
       }
@@ -43,7 +44,8 @@ export function eventBusConnect<TRequestData = any, TResponseData = any>({
       routePush(event.route, connectionId)
       server.emit(event)
     })
-  } catch (err) {
+  }
+ catch (err) {
     unsubscribe()
     throw err
   }

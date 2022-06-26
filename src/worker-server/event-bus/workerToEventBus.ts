@@ -16,7 +16,8 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
       function onExit(code: number) {
         if (code) {
           console.error(new ExitError(code))
-        } else {
+        }
+ else {
           console.warn(`Exit code: ${code}`)
         }
       }

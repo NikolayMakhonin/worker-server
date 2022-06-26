@@ -5,7 +5,7 @@ import {WorkerData} from '../common/contracts'
 import {TestFuncArgs} from './contracts'
 import {createTestFuncResult} from './helpers'
 import {delay} from '@flemist/async-utils'
-import {IAbortSignalFast} from "@flemist/abort-controller-fast";
+import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 
 function func1(
   data: WorkerData<TestFuncArgs>,

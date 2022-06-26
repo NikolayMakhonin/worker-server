@@ -1,5 +1,5 @@
 import {TransferListItem} from 'worker_threads'
-import {IAbortSignalFast} from "@flemist/abort-controller-fast";
+import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 
 export type PromiseOrValue<T> = Promise<T> | T
 
@@ -33,8 +33,7 @@ export interface IEventSubscriber<TSubscribeEvent> {
   subscribe(callback: (event: TSubscribeEvent) => void): IUnsubscribe
 }
 export interface IEventBus<TEmitEvent, TSubscribeEvent>
-  extends IEventEmitter<TEmitEvent>, IEventSubscriber<TSubscribeEvent>
-{ }
+  extends IEventEmitter<TEmitEvent>, IEventSubscriber<TSubscribeEvent> { }
 
 export type WorkerCallback<TData = any> = Callback<WorkerData<TData>>
 
@@ -45,14 +44,11 @@ export type WorkerEvent<TData = any> = {
 }
 
 export interface IWorkerEventEmitter<TRequestData = any>
-  extends IEventEmitter<WorkerEvent<TRequestData>>
-{ }
+  extends IEventEmitter<WorkerEvent<TRequestData>> { }
 export interface IWorkerEventSubscriber<TResponseData = any>
-  extends IEventSubscriber<WorkerEvent<TResponseData>>
-{ }
+  extends IEventSubscriber<WorkerEvent<TResponseData>> { }
 export interface IWorkerEventBus<TRequestData = any, TResponseData = any>
-  extends IWorkerEventEmitter<TRequestData>, IWorkerEventSubscriber<TResponseData>
-{ }
+  extends IWorkerEventEmitter<TRequestData>, IWorkerEventSubscriber<TResponseData> { }
 
 type WorkerFuncPromise<TRequestData = any, TResponseData = any> = (
   data: WorkerData<TRequestData>,

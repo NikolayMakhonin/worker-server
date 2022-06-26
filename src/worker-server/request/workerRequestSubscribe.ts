@@ -2,7 +2,7 @@ import {IUnsubscribeAsync, IWorkerEventBus, WorkerCallback, WorkerData} from '..
 import {getNextId} from '../common/getNextId'
 import {workerSubscribe} from './workerSubscribe'
 import {workerRequest} from './workerRequest'
-import {IAbortSignalFast} from "@flemist/abort-controller-fast";
+import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 
 export async function workerRequestSubscribe<
   TSubscribeData = any,
@@ -52,7 +52,8 @@ export async function workerRequestSubscribe<
         requestId,
       })
     }
-  } catch (err) {
+  }
+ catch (err) {
     unsubscribe()
     throw err
   }

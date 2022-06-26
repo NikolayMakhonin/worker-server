@@ -3,7 +3,7 @@ import {useAbortController, combineAbortSignals} from '@flemist/async-utils'
 import {workerSend} from './workerSend'
 import {getNextId} from '../common/getNextId'
 import {workerWait} from './workerWait'
-import {IAbortSignalFast} from "@flemist/abort-controller-fast";
+import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 
 export function workerRequest<
   TRequestData = any,

@@ -28,7 +28,8 @@ export function workerSubscribe<TResponseData = any>({
         if (!routePop(route, requestId)) {
           return
         }
-      } catch (err) {
+      }
+ catch (err) {
         callback(void 0, err)
       }
       if (route.length) {
@@ -40,7 +41,8 @@ export function workerSubscribe<TResponseData = any>({
       }
       callback(data)
     })
-  } catch (err) {
+  }
+ catch (err) {
     unsubscribe()
     throw err
   }

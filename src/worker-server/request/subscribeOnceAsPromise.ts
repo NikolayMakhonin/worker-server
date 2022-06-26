@@ -44,7 +44,8 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
         }
         resolve(data)
       })
-    } catch (err) {
+    }
+ catch (err) {
       unsubscribe()
       throw err
     }
