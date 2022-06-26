@@ -18,6 +18,7 @@ export declare type TaskFunctionRequest<TRequest = any> = {
 } | {
     action: 'abort';
     reason: any;
+    props: any;
 });
 export declare type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
     event: 'started';
@@ -30,6 +31,7 @@ export declare type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
 } | {
     event: 'error';
     error: any;
+    props: any;
 };
 export declare type AbortFunc = (reason: any) => void;
 export declare function workerFunctionServer<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, task, name, }: {

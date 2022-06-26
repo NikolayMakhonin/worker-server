@@ -33,6 +33,7 @@ export type TaskFunctionRequest<TRequest = any> = {
 } | {
   action: 'abort',
   reason: any,
+  props: any,
 })
 
 export type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
@@ -46,6 +47,7 @@ export type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
 } | {
   event: 'error',
   error: any,
+  props: any
 }
 
 export type AbortFunc = (reason: any) => void
@@ -150,6 +152,7 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
               data: {
                 event: 'error',
                 error,
+                props: error instanceof Error ? {...error} : void 0,
               },
             })
           } finally {
@@ -161,6 +164,13 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
           const abort = abortMap.get(requestId)
           if (abort) {
             abortMap.delete(requestId)
+            if (event.data.data.reason instanceof Error) {
+              if (event.data.data.props.name === 'AbortError') {
+                abort(new AbortError(event.data.data.reason.message, event.data.data.props.reason))
+                break
+              }
+              Object.assign(event.data.data.reason, event.data.data.props)
+            }
             abort(event.data.data.reason)
           }
           break
@@ -244,6 +254,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
                 task  : name,
                 action: 'abort',
                 reason,
+                props: reason instanceof Error ? {...reason} : void 0,
               },
               transferList: request?.transferList,
             },
@@ -269,6 +280,13 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
                 console.log('started: ' + name)
                 break
               case 'error':
+                if (data.data.error instanceof Error) {
+                  if (data.data.props.name === 'AbortError') {
+                    reject(new AbortError(data.data.error.message, data.data.props.reason))
+                    break
+                  }
+                  Object.assign(data.data.error, data.data.props)
+                }
                 reject(data.data.error)
                 break
               case 'callback':

@@ -10,7 +10,7 @@ describe('worker-server > main', function () {
       new Promise((resolve, reject) => {
         setTimeout(() => {
           reject('Timeout')
-        }, 5000)
+        }, 10000)
       }),
     ])
   })

@@ -80,6 +80,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
                             data: {
                                 event: 'error',
                                 error,
+                                props: error instanceof Error ? Object.assign({}, error) : void 0,
                             },
                         });
                     }
@@ -92,6 +93,13 @@ function workerFunctionServer({ eventBus, task, name, }) {
                     const abort = abortMap.get(requestId);
                     if (abort) {
                         abortMap.delete(requestId);
+                        if (event.data.data.reason instanceof Error) {
+                            if (event.data.data.props.name === 'AbortError') {
+                                abort(new abortControllerFast.AbortError(event.data.data.reason.message, event.data.data.props.reason));
+                                break;
+                            }
+                            Object.assign(event.data.data.reason, event.data.data.props);
+                        }
                         abort(event.data.data.reason);
                     }
                     break;
@@ -146,6 +154,7 @@ function workerFunctionClient({ eventBus, name, }) {
                                 task: name,
                                 action: 'abort',
                                 reason,
+                                props: reason instanceof Error ? Object.assign({}, reason) : void 0,
                             },
                             transferList: request === null || request === void 0 ? void 0 : request.transferList,
                         },
@@ -171,6 +180,13 @@ function workerFunctionClient({ eventBus, name, }) {
                                 console.log('started: ' + name);
                                 break;
                             case 'error':
+                                if (data.data.error instanceof Error) {
+                                    if (data.data.props.name === 'AbortError') {
+                                        reject(new abortControllerFast.AbortError(data.data.error.message, data.data.props.reason));
+                                        break;
+                                    }
+                                    Object.assign(data.data.error, data.data.props);
+                                }
                                 reject(data.data.error);
                                 break;
                             case 'callback':

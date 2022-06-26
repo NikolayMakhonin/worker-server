@@ -1,7 +1,7 @@
 import {TestFunc} from './contracts'
 import {func1, func2, func3} from './main'
 import {WorkerData} from '../common/contracts'
-import {AbortControllerFast} from '@flemist/abort-controller-fast'
+import {AbortControllerFast, AbortError} from '@flemist/abort-controller-fast'
 
 function createArray(...values: number[]): Float32Array {
   const array = new Float32Array(values)
@@ -128,10 +128,13 @@ export async function test({
     result = await promise
   } catch (err) {
     assert.ok(err)
-    errorMessage = typeof err === 'string'
-      ? err
-      : err.message
-    if (errorMessage.length > 20) {
+    if (typeof err === 'string') {
+      errorMessage = err
+    } else if (err instanceof AbortError) {
+      errorMessage = err.reason
+    } else if (err.message.length <= 20) {
+      errorMessage = err.message
+    } else {
       throw err
     }
   }
@@ -147,7 +150,7 @@ export async function test({
     if (checkResult.result) {
       assert.strictEqual(result.transferList.length, 1)
       assert.strictEqual(result.transferList[0], result.data.buffer)
-    } else if (checkResult.errorMessage) {
+    } else if (error || abort) {
       assert.deepStrictEqual(result, void 0)
     } else {
       assert.deepStrictEqual(result, {
