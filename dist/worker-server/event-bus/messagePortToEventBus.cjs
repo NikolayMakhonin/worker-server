@@ -7,6 +7,9 @@ var workerServer_errors_CloseError = require('../errors/CloseError.cjs');
 function messagePortToEventBus(messagePort) {
     return {
         subscribe(callback) {
+            // function onError(error: Error) {
+            //   console.error(error)
+            // }
             function onMessageError(error) {
                 console.error(error);
             }

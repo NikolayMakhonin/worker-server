@@ -36,6 +36,7 @@ export async function workerRequestSubscribe<
   try {
     type TUnsubscribeData = any
     
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
     const unsubscribeData = await workerRequest<TSubscribeData, TUnsubscribeData>({
       eventBus,
       data,

@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { TransferListItem } from 'worker_threads';
-import { IAbortSignalFast } from "@flemist/abort-controller-fast";
+import { IAbortSignalFast } from '@flemist/abort-controller-fast';
 export declare type PromiseOrValue<T> = Promise<T> | T;
 export declare type TaskFunc<TRequest, TCallbackData, TResult> = (request: TRequest, abortSignal?: IAbortSignalFast, callback?: (data: TCallbackData) => void) => PromiseOrValue<TResult>;
 export declare type WorkerData<TData = any> = {

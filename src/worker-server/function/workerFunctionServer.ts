@@ -55,7 +55,6 @@ export type TaskFunctionRequest<TRequest = any> = {
 } | {
   action: 'abort',
   reason: any,
-  props: any,
 })
 
 export type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
@@ -187,14 +186,7 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
           const abort = abortMap.get(requestId)
           if (abort) {
             abortMap.delete(requestId)
-            if (event.data.data.reason instanceof Error) {
-              if (event.data.data.props.name === 'AbortError') {
-                abort(new AbortError(event.data.data.reason.message, event.data.data.props.reason))
-                break
-              }
-              Object.assign(event.data.data.reason, event.data.data.props)
-            }
-            abort(event.data.data.reason)
+            abort(deserializeError(event.data.data.reason))
           }
           break
         }
@@ -277,8 +269,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
               data: {
                 task  : name,
                 action: 'abort',
-                reason,
-                props : reason instanceof Error ? {...reason} : void 0,
+                reason: serializeError(reason),
               },
               transferList: request?.transferList,
             },

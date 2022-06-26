@@ -31,6 +31,7 @@ function workerRequestSubscribe({ eventBus, data, abortSignal, callback, }) {
             },
         });
         try {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-arguments
             const unsubscribeData = yield workerServer_request_workerRequest.workerRequest({
                 eventBus,
                 data,

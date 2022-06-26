@@ -1,4 +1,4 @@
-export { IUnsubscribe, WorkerEvent, IWorkerEventEmitter, IWorkerEventSubscriber, IWorkerEventBus, } from './common/contracts';
+export type { IUnsubscribe, WorkerEvent, IWorkerEventEmitter, IWorkerEventSubscriber, IWorkerEventBus, } from './common/contracts';
 export { ExitError } from './errors/ExitError';
 export { workerToEventBus } from './event-bus/workerToEventBus';
 export { messagePortToEventBus } from './event-bus/messagePortToEventBus';

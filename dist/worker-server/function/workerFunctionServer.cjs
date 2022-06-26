@@ -107,14 +107,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
                     const abort = abortMap.get(requestId);
                     if (abort) {
                         abortMap.delete(requestId);
-                        if (event.data.data.reason instanceof Error) {
-                            if (event.data.data.props.name === 'AbortError') {
-                                abort(new abortControllerFast.AbortError(event.data.data.reason.message, event.data.data.props.reason));
-                                break;
-                            }
-                            Object.assign(event.data.data.reason, event.data.data.props);
-                        }
-                        abort(event.data.data.reason);
+                        abort(deserializeError(event.data.data.reason));
                     }
                     break;
                 }
@@ -167,8 +160,7 @@ function workerFunctionClient({ eventBus, name, }) {
                             data: {
                                 task: name,
                                 action: 'abort',
-                                reason,
-                                props: reason instanceof Error ? Object.assign({}, reason) : void 0,
+                                reason: serializeError(reason),
                             },
                             transferList: request === null || request === void 0 ? void 0 : request.transferList,
                         },
