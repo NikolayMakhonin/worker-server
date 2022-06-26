@@ -2,6 +2,7 @@ import {IUnsubscribeAsync, IWorkerEventBus, WorkerCallback, WorkerData} from '..
 import {getNextId} from '../common/getNextId'
 import {workerSubscribe} from './workerSubscribe'
 import {workerRequest} from './workerRequest'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 export async function workerRequestSubscribe<
   TSubscribeData = any,
@@ -14,7 +15,7 @@ export async function workerRequestSubscribe<
 }: {
   eventBus: IWorkerEventBus<TSubscribeData, TCallbackData>,
   data: WorkerData<TSubscribeData>,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
   callback: WorkerCallback<TCallbackData>,
 }): Promise<IUnsubscribeAsync> {
   const requestId = getNextId()
@@ -42,7 +43,7 @@ export async function workerRequestSubscribe<
       requestId,
     })
 
-    return async function unsubscribeAsync(_abortSignal?: AbortSignal) {
+    return async function unsubscribeAsync(_abortSignal?: IAbortSignalFast) {
       unsubscribe()
       await workerRequest<TUnsubscribeData, void>({
         eventBus   : eventBus as any,

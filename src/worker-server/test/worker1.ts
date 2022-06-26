@@ -4,11 +4,12 @@ import {messagePortToEventBus} from '../event-bus/messagePortToEventBus'
 import {WorkerData} from '../common/contracts'
 import {TestFuncArgs} from './contracts'
 import {createTestFuncResult} from './helpers'
-import {delay} from '../../test/delay'
+import {delay} from '@flemist/async-utils'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 function func1(
   data: WorkerData<TestFuncArgs>,
-  abortSignal: AbortSignal,
+  abortSignal: IAbortSignalFast,
   callback: (data: WorkerData<any>) => void,
 ): WorkerFunctionServerResult<Float32Array> {
   callback(createTestFuncResult(data.data.value.slice()))

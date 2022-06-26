@@ -1,7 +1,7 @@
 import {TestFunc} from './contracts'
 import {func1, func2, func3} from './main'
 import {WorkerData} from '../common/contracts'
-import {AbortControllerImpl} from '../../abort-controller/AbortController'
+import {AbortControllerFast} from '@flemist/abort-controller-fast'
 
 function createArray(...values: number[]): Float32Array {
   const array = new Float32Array(values)
@@ -98,7 +98,7 @@ export async function test({
   let result: WorkerData<Float32Array>
   errorMessage = void 0
 
-  const abortController = new AbortControllerImpl()
+  const abortController = new AbortControllerFast()
   const promise = func(
     {
       data        : {value, async, error},

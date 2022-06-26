@@ -1,10 +1,10 @@
 import {test} from './test'
-import {createTestVariantsAsync} from '../../test/createTestVariants'
+import {createTestVariants} from '@flemist/test-variants'
 
 describe('worker-event-bus', function () {
   this.timeout(60000)
 
-  const testVariants = createTestVariantsAsync(function () {
+  const testVariants = createTestVariants(function () {
     return Promise.race([
       test.apply(null, arguments),
       new Promise((resolve, reject) => {

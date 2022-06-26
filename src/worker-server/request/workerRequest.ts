@@ -1,9 +1,9 @@
 import {IWorkerEventBus, WorkerData} from '../common/contracts'
-import {useAbortController} from '../../abort-controller/useAbortController'
-import {combineAbortSignals} from '../../abort-controller/combineAbortSignals'
+import {useAbortController, combineAbortSignals} from '@flemist/async-utils'
 import {workerSend} from './workerSend'
 import {getNextId} from '../common/getNextId'
 import {workerWait} from './workerWait'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 export function workerRequest<
   TRequestData = any,
@@ -16,7 +16,7 @@ export function workerRequest<
 }: {
   eventBus: IWorkerEventBus<TRequestData, TResponseData>,
   data: WorkerData<TRequestData>,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
   requestId?: string,
 }): Promise<WorkerData<TResponseData>> {
   return useAbortController((signal) => {

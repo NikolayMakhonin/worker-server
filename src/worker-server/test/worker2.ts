@@ -4,6 +4,7 @@ import {messagePortToEventBus} from '../event-bus/messagePortToEventBus'
 import {TestFuncArgs} from './contracts'
 import {WorkerData} from '../common/contracts'
 import {createTestFuncResult} from './helpers'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 const func1Port = workerData.func1Port
 const func1EventBus = messagePortToEventBus(func1Port)
@@ -15,7 +16,7 @@ const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
 
 function func2(
   data: WorkerData<TestFuncArgs>,
-  abortSignal: AbortSignal,
+  abortSignal: IAbortSignalFast,
   callback: (data: WorkerData<any>) => void,
 ): WorkerFunctionServerResult<Float32Array> {
   callback(createTestFuncResult(data.data.value.slice()))

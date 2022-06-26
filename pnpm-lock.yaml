@@ -1,6 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@flemist/abort-controller-fast': ^0.0.5
+  '@flemist/async-utils': ^0.0.2
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
   '@flemist/test-variants': 0.0.14
@@ -35,6 +37,8 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
+  '@flemist/abort-controller-fast': 0.0.5
+  '@flemist/async-utils': 0.0.2
   tslib: 2.4.0
 
 devDependencies:
@@ -291,12 +295,34 @@ packages:
       - supports-color
     dev: true
 
+  /@flemist/abort-controller-fast/0.0.5:
+    resolution: {integrity: sha512-ewpqfmNx+V5dqTzVBxi7syhhsFRk5ktNOd0d85tKyGkqwzoMyJSYGBPmycYhlUDSsIN/3Nb2EaE0tPOtfw6PNQ==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
+  /@flemist/async-utils/0.0.2:
+    resolution: {integrity: sha512-JoZo74naA0NxJDKwZgrB14/aX0slydL+oX9SJTJVqGW/3ugWPjJDh5XbcvQKGLligBz2FkN5SnQvS0mxJN6IDg==}
+    engines: {node: '>=10.4.0', pnpm: ^7.1.6}
+    dependencies:
+      '@flemist/abort-controller-fast': 0.0.5
+      '@flemist/time-controller': 0.0.1
+      tslib: 2.4.0
+    dev: false
+
   /@flemist/copy-glob-flat/0.0.5:
     resolution: {integrity: sha512-nw2x3zS78uRv7jlR709oXiMXhtTlTS2+WJiy3aTabcayv50CNHMKXevv9WR7YjUJzS7743EdPJl5wAKjIq9Fdg==}
     hasBin: true
     dependencies:
       tslib: 2.4.0
     dev: true
+
+  /@flemist/pairing-heap/0.0.1:
+    resolution: {integrity: sha512-bsXb0bYvrhkibbWAURawIvcR09l5sgRsnFAAwGXr1F1TPZqBL9KMzB0QTlwmokKkd3ci5GqsUUWE1BzK80l6Rg==}
+    engines: {node: '>=10.4.0', pnpm: ^7.1.6}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
 
   /@flemist/test-utils/0.0.7:
     resolution: {integrity: sha512-HJxyDzk0JzTmroizBpnyUfFxTS+Zklwta2jyVbSljiykH8xgNF/M6Y8WXLUrF8c6bw2dhvD0ZzGdivR3yU2Ihg==}
@@ -311,6 +337,14 @@ packages:
     dependencies:
       tslib: 2.4.0
     dev: true
+
+  /@flemist/time-controller/0.0.1:
+    resolution: {integrity: sha512-z2rddW0+5+fPc+rf3Irq1w1SCzxjYGmv6BrG98nuOXcByK0v+oIsAfslFQudUqJHxZ59fZ6WbzAlgRsLoFDYIw==}
+    engines: {node: '>=10.4.0', pnpm: ^7.1.6}
+    dependencies:
+      '@flemist/pairing-heap': 0.0.1
+      tslib: 2.4.0
+    dev: false
 
   /@humanwhocodes/config-array/0.9.5:
     resolution: {integrity: sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw==}

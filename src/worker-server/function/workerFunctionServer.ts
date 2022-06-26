@@ -4,15 +4,14 @@ import {TransferListItem} from 'worker_threads'
 import {getNextId} from '../common/getNextId'
 import {workerSend} from '../request/workerSend'
 import {workerSubscribe} from '../request/workerSubscribe'
-import {AbortError} from '../../abort-controller/AbortError'
-import {combineAbortSignals} from '../../abort-controller/combineAbortSignals'
-import {AbortControllerImpl} from '../../abort-controller/AbortController'
+import {AbortError, AbortControllerFast, IAbortSignalFast} from '@flemist/abort-controller-fast'
+import {combineAbortSignals} from '@flemist/async-utils'
 
 export type PromiseOrValue<T> = Promise<T> | T
 
 export type TaskFunc<TRequest, TResult, TCallbackData> = (
   request: TRequest,
-  abortSignal: AbortSignal,
+  abortSignal: IAbortSignalFast,
   callback: (data: TCallbackData) => void,
 ) => PromiseOrValue<TResult>
 
@@ -104,7 +103,7 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
         case 'start': {
           let promiseOrResult: PromiseOrValue<WorkerData<TResult>>
           try {
-            const abortController = new AbortControllerImpl()
+            const abortController = new AbortControllerFast()
             abortMap.set(requestId, function abort(reason: any) {
               abortController.abort(reason)
             })
@@ -180,7 +179,7 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
 export type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>
   = (
   request: WorkerData<TRequest>,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
   callback?: (data: WorkerData<TCallbackData>) => void,
 ) => Promise<WorkerData<TResult>>
 
@@ -196,10 +195,10 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
 }) {
   function task(
     request: WorkerData<TRequest>,
-    abortSignal?: AbortSignal,
+    abortSignal?: IAbortSignalFast,
     callback?: (data: WorkerData<TCallbackData>) => void,
   ): Promise<WorkerData<TResult>> {
-    const abortController = new AbortControllerImpl()
+    const abortController = new AbortControllerFast()
     return new Promise<WorkerData<TResult>>((_resolve, _reject) => {
       if (abortSignal?.aborted) {
         reject(new AbortError())
@@ -211,8 +210,12 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
 
       let unsubscribeEventBus: IUnsubscribe
 
+      const unsubscribeAbortSignal = signal?.subscribe(abort)
+
       function unsubscribe() {
-        signal?.removeEventListener('abort', abort)
+        if (unsubscribeAbortSignal) {
+          unsubscribeAbortSignal()
+        }
         if (unsubscribeEventBus) {
           unsubscribeEventBus()
         }
@@ -228,9 +231,8 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
         _reject(err)
       }
 
-      function abort(this: AbortSignal) {
+      function abort(this: IAbortSignalFast) {
         try {
-          signal?.removeEventListener('abort', abort)
           abortController.abort()
 
           const reason = (this as any).reason
@@ -251,8 +253,6 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
           reject(err)
         }
       }
-
-      signal?.addEventListener('abort', abort)
 
       try {
         unsubscribeEventBus = workerSubscribe({

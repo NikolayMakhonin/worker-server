@@ -13,9 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/NikolayMakhonin/worker-server.git"
   },
-  "keywords": [
-
-  ],
+  "keywords": [],
   "author": {
     "name": "Nikolay Makhonin",
     "url": "https://github.com/NikolayMakhonin/"
@@ -78,6 +76,8 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "@flemist/abort-controller-fast": "^0.0.5",
+    "@flemist/async-utils": "^0.0.2",
     "tslib": "^2.4.0"
   }
 }

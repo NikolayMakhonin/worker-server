@@ -1,10 +1,11 @@
 import {TransferListItem} from 'worker_threads'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 export type PromiseOrValue<T> = Promise<T> | T
 
 export type TaskFunc<TRequest, TCallbackData, TResult> = (
   request: TRequest,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
   callback?: (data: TCallbackData) => void,
 ) => PromiseOrValue<TResult>
 
@@ -21,7 +22,7 @@ export type WorkerTaskFuncResult<TResult> = PromiseOrValue<WorkerData<TResult>>
 
 export type IUnsubscribe = () => void
 
-export type IUnsubscribeAsync = (abortSignal: AbortSignal) => PromiseOrValue<void>
+export type IUnsubscribeAsync = (abortSignal: IAbortSignalFast) => PromiseOrValue<void>
 
 export type Callback<TData = any, TError = Error> = (data: TData, error?: TError) => void
 
@@ -55,12 +56,12 @@ export interface IWorkerEventBus<TRequestData = any, TResponseData = any>
 
 type WorkerFuncPromise<TRequestData = any, TResponseData = any> = (
   data: WorkerData<TRequestData>,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
 ) => PromiseOrValue<WorkerData<TResponseData>>
 
 type WorkerFuncSubscribe<TRequestData = any, TResponseData = any> = (
   data: WorkerData<TRequestData>,
-  abortSignal: AbortSignal,
+  abortSignal: IAbortSignalFast,
   callback: WorkerCallback<TResponseData>,
 ) => PromiseOrValue<IUnsubscribeAsync>
 

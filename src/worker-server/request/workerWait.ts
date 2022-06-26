@@ -1,6 +1,7 @@
 import {IWorkerEventSubscriber, WorkerData} from '../common/contracts'
 import {workerSubscribe} from './workerSubscribe'
 import {subscribeOnceAsPromise} from './subscribeOnceAsPromise'
+import {IAbortSignalFast} from "@flemist/abort-controller-fast";
 
 export function workerWait<TResponseData = any>({
   eventBus,
@@ -9,7 +10,7 @@ export function workerWait<TResponseData = any>({
 }: {
   eventBus: IWorkerEventSubscriber<TResponseData>,
   requestId: string,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
 }): Promise<WorkerData<TResponseData>> {
   return subscribeOnceAsPromise<WorkerData<TResponseData>>({
     subscribe(callback) {

@@ -1,12 +1,12 @@
 import {Callback, IUnsubscribe} from '../common/contracts'
-import {AbortError} from '../../abort-controller/AbortError'
+import {AbortError, IAbortSignalFast} from '@flemist/abort-controller-fast'
 
 export function subscribeOnceAsPromise<TData = any, TError = Error>({
   subscribe,
   abortSignal,
 }: {
   subscribe: (callback: Callback<TData, TError>) => IUnsubscribe,
-  abortSignal?: AbortSignal,
+  abortSignal?: IAbortSignalFast,
 }): Promise<TData> {
   return new Promise<TData>((_resolve, _reject) => {
     if (abortSignal?.aborted) {
@@ -15,8 +15,12 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
 
     let unsubscribeEventBus: IUnsubscribe
 
+    const unsubscribeAbortSignal = abortSignal?.subscribe(unsubscribe)
+
     function unsubscribe() {
-      abortSignal?.removeEventListener('abort', unsubscribe)
+      if (unsubscribeAbortSignal) {
+        unsubscribeAbortSignal()
+      }
       if (unsubscribeEventBus) {
         unsubscribeEventBus()
       }
@@ -31,8 +35,6 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
       unsubscribe()
       _reject(err)
     }
-
-    abortSignal?.addEventListener('abort', unsubscribe)
 
     try {
       unsubscribeEventBus = subscribe((data, error) => {
