@@ -22,6 +22,7 @@ export declare type TaskFunctionRequest<TRequest = any> = {
 } | {
     action: 'abort';
     reason: any;
+    props: any;
 });
 export declare type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
     event: 'started';
