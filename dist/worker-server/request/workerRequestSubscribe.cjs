@@ -13,7 +13,6 @@ require('./workerSend.cjs');
 require('../common/createWorkerEvent.cjs');
 require('./workerWait.cjs');
 require('./subscribeOnceAsPromise.cjs');
-require('@flemist/abort-controller-fast');
 
 function workerRequestSubscribe({ eventBus, data, abortSignal, callback, }) {
     return tslib.__awaiter(this, void 0, void 0, function* () {

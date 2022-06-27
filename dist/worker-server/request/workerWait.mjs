@@ -1,7 +1,6 @@
 import { workerSubscribe } from './workerSubscribe.mjs';
 import { subscribeOnceAsPromise } from './subscribeOnceAsPromise.mjs';
 import '../common/route.mjs';
-import '@flemist/abort-controller-fast';
 
 function workerWait({ eventBus, requestId, abortSignal, }) {
     return subscribeOnceAsPromise({

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-loop-func */
 import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
 import {delay} from '@flemist/async-utils'

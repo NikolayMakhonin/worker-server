@@ -2,12 +2,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var abortControllerFast = require('@flemist/abort-controller-fast');
-
 function subscribeOnceAsPromise({ subscribe, abortSignal, }) {
     return new Promise((_resolve, _reject) => {
         if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
-            throw new abortControllerFast.AbortError();
+            throw abortSignal.reason;
         }
         let unsubscribeEventBus;
         const unsubscribeAbortSignal = abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.subscribe(unsubscribe);
@@ -42,7 +40,7 @@ function subscribeOnceAsPromise({ subscribe, abortSignal, }) {
         }
         if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
             unsubscribe();
-            throw new abortControllerFast.AbortError();
+            throw abortSignal.reason;
         }
     });
 }

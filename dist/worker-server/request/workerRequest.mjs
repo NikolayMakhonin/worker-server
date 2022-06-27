@@ -7,7 +7,6 @@ import 'worker_threads';
 import './workerSubscribe.mjs';
 import '../common/route.mjs';
 import './subscribeOnceAsPromise.mjs';
-import '@flemist/abort-controller-fast';
 
 function workerRequest({ eventBus, data, abortSignal, requestId, }) {
     return useAbortController((signal) => {

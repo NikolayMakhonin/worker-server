@@ -9,7 +9,6 @@ import './workerSend.mjs';
 import '../common/createWorkerEvent.mjs';
 import './workerWait.mjs';
 import './subscribeOnceAsPromise.mjs';
-import '@flemist/abort-controller-fast';
 
 function workerRequestSubscribe({ eventBus, data, abortSignal, callback, }) {
     return __awaiter(this, void 0, void 0, function* () {

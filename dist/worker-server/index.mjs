@@ -14,4 +14,3 @@ import './common/createWorkerEvent.mjs';
 import '@flemist/async-utils';
 import './request/workerWait.mjs';
 import './request/subscribeOnceAsPromise.mjs';
-import '@flemist/abort-controller-fast';

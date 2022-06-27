@@ -127,7 +127,7 @@ function workerFunctionClient({ eventBus, name, }) {
         const abortController = new abortControllerFast.AbortControllerFast();
         return new Promise((_resolve, _reject) => {
             if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
-                reject(new abortControllerFast.AbortError());
+                reject(abortSignal.reason);
                 return;
             }
             const signal = asyncUtils.combineAbortSignals(abortController.signal, abortSignal);

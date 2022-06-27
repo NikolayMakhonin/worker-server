@@ -123,7 +123,7 @@ function workerFunctionClient({ eventBus, name, }) {
         const abortController = new AbortControllerFast();
         return new Promise((_resolve, _reject) => {
             if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
-                reject(new AbortError());
+                reject(abortSignal.reason);
                 return;
             }
             const signal = combineAbortSignals(abortController.signal, abortSignal);

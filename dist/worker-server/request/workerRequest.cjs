@@ -11,7 +11,6 @@ require('worker_threads');
 require('./workerSubscribe.cjs');
 require('../common/route.cjs');
 require('./subscribeOnceAsPromise.cjs');
-require('@flemist/abort-controller-fast');
 
 function workerRequest({ eventBus, data, abortSignal, requestId, }) {
     return asyncUtils.useAbortController((signal) => {

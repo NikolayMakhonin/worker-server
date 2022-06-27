@@ -18,7 +18,6 @@ require('./common/createWorkerEvent.cjs');
 require('@flemist/async-utils');
 require('./request/workerWait.cjs');
 require('./request/subscribeOnceAsPromise.cjs');
-require('@flemist/abort-controller-fast');
 
 
 
