@@ -227,7 +227,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
     const abortController = new AbortControllerFast()
     return new Promise<WorkerData<TResult>>((_resolve, _reject) => {
       if (abortSignal?.aborted) {
-        reject(new AbortError())
+        reject(abortSignal.reason)
         return
       }
       const signal = combineAbortSignals(abortController.signal, abortSignal)

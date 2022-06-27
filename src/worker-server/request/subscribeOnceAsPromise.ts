@@ -10,7 +10,7 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
 }): Promise<TData> {
   return new Promise<TData>((_resolve, _reject) => {
     if (abortSignal?.aborted) {
-      throw new AbortError()
+      throw abortSignal.reason
     }
 
     let unsubscribeEventBus: IUnsubscribe
@@ -52,7 +52,7 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
 
     if (abortSignal?.aborted) {
       unsubscribe()
-      throw new AbortError()
+      throw abortSignal.reason
     }
   })
 }

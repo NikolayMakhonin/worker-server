@@ -18,7 +18,7 @@ describe('worker-server > main', function () {
       new Promise<void>((resolve, reject) => {
         setTimeout(() => {
           reject('Timeout')
-        }, 60000)
+        }, 600000)
       }),
     ])
   })
@@ -56,7 +56,7 @@ describe('worker-server > main', function () {
     }
     catch (err) {
       abortController.abort()
-      await delay(10000)
+      await delay(15000)
       if (!firstErrorEvent) {
         console.log(`firstErrorEvent is null`)
         throw err

@@ -12,6 +12,8 @@ function parseArray(array: Float32Array): number[] {
   return array && Array.from(array.values())
 }
 
+let nextId = 1
+
 export async function test({
   funcName,
   async,
@@ -25,9 +27,10 @@ export async function test({
   abort: false | 'error' | 'stop',
   assert: boolean,
 }) {
-  console.debug('=============== START ===============')
+  let id = nextId++
+  console.debug(`=============== START ${id} ===============`)
   type TValues = number[]
-  const values: TValues = [10, 20, 30]
+  const values: TValues = [10, 20, 30, id]
   let func: TestFunc
   let checkResult: {
     callbacks: TValues[],
@@ -38,16 +41,16 @@ export async function test({
   let errorMessage = error ? (async ? 'func1' : funcName)
     : abort === 'error' && async ? 'abort'
       : void 0
-  
+
   switch (funcName) {
     case 'func1':
       func = func1
       if (_assert) {
         checkResult = {
           callbacks: error || abort && async
-            ? [[10, 20, 30], [11, 20, 30]]
-            : [[10, 20, 30], [11, 20, 30]],
-          result: error || abort && async ? void 0 : [12, 20, 30],
+            ? [[10, 20, 30, id], [11, 20, 30, id]]
+            : [[10, 20, 30, id], [11, 20, 30, id]],
+          result: error || abort && async ? void 0 : [12, 20, 30, id],
           errorMessage,
         }
       }
@@ -58,13 +61,13 @@ export async function test({
         checkResult = {
           callbacks: async
             ? (error || abort
-              ? [[10, 20, 30], [10, 21, 30], [10, 21, 30], [11, 21, 30]]
-              : [[10, 20, 30], [10, 21, 30], [10, 21, 30], [11, 21, 30]])
+              ? [[10, 20, 30, id], [10, 21, 30, id], [10, 21, 30, id], [11, 21, 30, id]]
+              : [[10, 20, 30, id], [10, 21, 30, id], [10, 21, 30, id], [11, 21, 30, id]])
             : (error
-              ? [[10, 20, 30], [10, 21, 30]]
-              : [[10, 20, 30], [10, 21, 30]]),
+              ? [[10, 20, 30, id], [10, 21, 30, id]]
+              : [[10, 20, 30, id], [10, 21, 30, id]]),
           result: error || abort && async ? void 0
-            : (async ? [12, 22, 30] : [10, 22, 30]),
+            : (async ? [12, 22, 30, id] : [10, 22, 30, id]),
           errorMessage,
         }
       }
@@ -75,13 +78,13 @@ export async function test({
         checkResult = {
           callbacks: async
             ? (error || abort
-              ? [[10, 20, 30], [10, 20, 31], [10, 20, 31], [11, 20, 31]]
-              : [[10, 20, 30], [10, 20, 31], [10, 20, 31], [11, 20, 31]])
+              ? [[10, 20, 30, id], [10, 20, 31, id], [10, 20, 31, id], [11, 20, 31, id]]
+              : [[10, 20, 30, id], [10, 20, 31, id], [10, 20, 31, id], [11, 20, 31, id]])
             : (error
-              ? [[10, 20, 30], [10, 20, 31]]
-              : [[10, 20, 30], [10, 20, 31]]),
+              ? [[10, 20, 30, id], [10, 20, 31, id]]
+              : [[10, 20, 30, id], [10, 20, 31, id]]),
           result: error || abort && async ? void 0
-            : (async ? [12, 20, 32] : [10, 20, 32]),
+            : (async ? [12, 20, 32, id] : [10, 20, 32, id]),
           errorMessage,
         }
       }
@@ -122,7 +125,7 @@ export async function test({
     abortController.abort('abort')
   }
   else if (abort === 'stop') {
-    abortController.abort()
+    abortController.abort(null)
   }
 
   try {
@@ -156,7 +159,7 @@ export async function test({
       assert.strictEqual(result.transferList.length, 1)
       assert.strictEqual(result.transferList[0], result.data.buffer)
     }
-    else if (error || abort) {
+    else if (error || abort === 'error') {
       assert.deepStrictEqual(result, void 0)
     }
     else {
@@ -167,5 +170,5 @@ export async function test({
     }
   }
 
-  console.debug('=============== END ===============')
+  console.debug(`=============== END ${id} ===============`)
 }
