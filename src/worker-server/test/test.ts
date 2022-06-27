@@ -134,13 +134,12 @@ export async function test({
 
   try {
     result = await promise
-    if (abortController.signal.aborted && abort !== 'stop' && async) {
+    if (abortController.signal.aborted && async && (abort !== 'stop' || typeof result?.data !== 'undefined')) {
       if (options?.globalMaxNotAbortedErrors > 0) {
         options.globalMaxNotAbortedErrors--
+        return
       }
-      else {
-        assert.fail('func is not aborted')
-      }
+      assert.fail('func is not aborted')
     }
   }
   catch (err) {

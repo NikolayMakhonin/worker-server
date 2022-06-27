@@ -44,7 +44,7 @@ describe('worker-server > main', function () {
       globalMaxNotAbortedErrors: 5,
     }
     const promises: (Promise<number>|number)[] = []
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 0; i < 20000; i++) {
       promises.push(testVariants({
         funcName: ['func1', 'func2', 'func3'],
         async   : [false, true],

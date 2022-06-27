@@ -305,10 +305,6 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
                 })
                 break
               case 'completed':
-                // if (abortSignal?.aborted) { // for stress test only
-                //   reject(abortSignal.reason)
-                //   break
-                // }
                 resolve({
                   data        : data.data.result,
                   transferList: data.transferList,
