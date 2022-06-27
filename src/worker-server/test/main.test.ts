@@ -3,6 +3,7 @@ import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
 import {delay, rejectAsResolve} from '@flemist/async-utils'
 import {AbortControllerFast} from '@flemist/abort-controller-fast'
+import {terminateWorkers} from 'src/worker-server/test/main'
 
 describe('worker-server > main', function () {
   this.timeout(600000)
@@ -22,9 +23,13 @@ describe('worker-server > main', function () {
       new Promise<void>((resolve) => {
         setTimeout(() => {
           rejectAsResolve(resolve, 'Timeout')
-        }, 30000)
+        }, 60000)
       }),
     ])
+  })
+
+  after(async () => {
+    await terminateWorkers()
   })
 
   it('simple', async function () {
@@ -38,7 +43,7 @@ describe('worker-server > main', function () {
     })()
   })
 
-  xit('stress', async function () {
+  it('stress', async function () {
     const abortController = new AbortControllerFast()
     let firstErrorEvent
     const options = {

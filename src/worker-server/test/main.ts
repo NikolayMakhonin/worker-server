@@ -40,3 +40,10 @@ export const func3 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: workerTransitEventBus,
   name    : 'func3',
 })
+
+export function terminateWorkers() {
+  return Promise.all([
+    worker1.terminate(),
+    workerTransit.terminate(),
+  ])
+}

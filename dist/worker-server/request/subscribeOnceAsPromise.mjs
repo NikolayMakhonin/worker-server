@@ -1,5 +1,7 @@
+import { rejectAsResolve } from '@flemist/async-utils';
+
 function subscribeOnceAsPromise({ subscribe, abortSignal, }) {
-    return new Promise((_resolve, _reject) => {
+    return new Promise((_resolve) => {
         if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
             throw abortSignal.reason;
         }
@@ -19,7 +21,7 @@ function subscribeOnceAsPromise({ subscribe, abortSignal, }) {
         }
         function reject(err) {
             unsubscribe();
-            _reject(err);
+            rejectAsResolve(_resolve, err);
         }
         try {
             unsubscribeEventBus = subscribe((data, error) => {

@@ -125,7 +125,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
 function workerFunctionClient({ eventBus, name, }) {
     function task(request, abortSignal, callback) {
         const abortController = new abortControllerFast.AbortControllerFast();
-        return new Promise((_resolve, _reject) => {
+        return new Promise((_resolve) => {
             if (abortSignal === null || abortSignal === void 0 ? void 0 : abortSignal.aborted) {
                 reject(abortSignal.reason);
                 return;
@@ -148,7 +148,7 @@ function workerFunctionClient({ eventBus, name, }) {
             }
             function reject(err) {
                 unsubscribe();
-                _reject(err);
+                asyncUtils.rejectAsResolve(_resolve, err);
             }
             function abort() {
                 try {
