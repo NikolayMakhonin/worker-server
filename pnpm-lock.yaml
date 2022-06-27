@@ -20,14 +20,14 @@ specifiers:
   '@zerollup/ts-transform-paths': 1.7.18
   cpy-cli: '=3.1.1'
   eslint: 8.18.0
-  eslint-config-pro: 3.0.14
+  eslint-config-pro: 3.0.15
   eslint-nibble: ^8.0.2
   fs-extra: 10.1.0
   globby: '=11.1.0'
   mocha: 9.2.2
   nodemon: 2.0.16
   nyc: 15.1.0
-  rdtsc: 3.0.0
+  rdtsc: 3.0.3
   rimraf: 3.0.2
   rollup: 2.75.7
   rollup-plugin-delete: 2.0.0
@@ -60,14 +60,14 @@ devDependencies:
   '@zerollup/ts-transform-paths': 1.7.18_typescript@4.7.4
   cpy-cli: 3.1.1
   eslint: 8.18.0
-  eslint-config-pro: 3.0.14_b5e7v2qnwxfo6hmiq56u52mz3e
+  eslint-config-pro: 3.0.15_b5e7v2qnwxfo6hmiq56u52mz3e
   eslint-nibble: 8.0.2_eslint@8.18.0
   fs-extra: 10.1.0
   globby: 11.1.0
   mocha: 9.2.2
   nodemon: 2.0.16
   nyc: 15.1.0
-  rdtsc: 3.0.0
+  rdtsc: 3.0.3
   rimraf: 3.0.2
   rollup: 2.75.7
   rollup-plugin-delete: 2.0.0
@@ -1747,8 +1747,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /eslint-config-pro/3.0.14_b5e7v2qnwxfo6hmiq56u52mz3e:
-    resolution: {integrity: sha512-kLY4/+5EkzxXbkA9jn7OWw4TgErEcql8zdd5EzHvdhJVUav7+VloR5sdpA8LcAEkM2rDrYm9MJO60Dwa4K9dcw==}
+  /eslint-config-pro/3.0.15_b5e7v2qnwxfo6hmiq56u52mz3e:
+    resolution: {integrity: sha512-yZCZRcbDOw99GsUublCMbcrLPucutr7xrAuXG1VlwD5OJn7amb+bOeXhEeaWfokoUsOmaRlZC5t2GK0QvvpkLw==}
     engines: {node: '>=10.4.0', pnpm: ^7.1.6}
     peerDependencies:
       eslint: '>=7.4.0'
@@ -3936,9 +3936,10 @@ packages:
       strip-json-comments: 2.0.1
     dev: true
 
-  /rdtsc/3.0.0:
-    resolution: {integrity: sha512-VrHxlpsl9rM04sLnZ0ezIC9Ne6LrtIQLfS4FuM+SkaR7PUKU/rlBnSyFw1XRRHqu9wPTORTiGRQxgTIRAKQLJg==}
+  /rdtsc/3.0.3:
+    resolution: {integrity: sha512-q3aPiS+toAcB5HYykDk6gcl3aZIZ21sJ37qZ+Sa5NRiGOod/9QnP0EyBT25uZV7C0L4xPtstzZ3KkbZjg8yNHw==}
     engines: {node: '>=12.4.0', pnpm: ^7.1.6}
+    requiresBuild: true
     dependencies:
       tslib: 2.4.0
     dev: true

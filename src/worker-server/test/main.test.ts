@@ -2,7 +2,7 @@ import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
 
 describe('worker-server > main', function () {
-  this.timeout(60000)
+  this.timeout(600000)
 
   const testVariants = createTestVariants(function () {
     return Promise.race([
@@ -10,7 +10,7 @@ describe('worker-server > main', function () {
       new Promise((resolve, reject) => {
         setTimeout(() => {
           reject('Timeout')
-        }, 10000)
+        }, 20000)
       }),
     ])
   })
@@ -27,7 +27,7 @@ describe('worker-server > main', function () {
 
   it('stress', async function () {
     const promises: (Promise<number>|number)[] = []
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 10000; i++) {
       promises.push(testVariants({
         funcName: ['func1', 'func2', 'func3'],
         async   : [false, true],
