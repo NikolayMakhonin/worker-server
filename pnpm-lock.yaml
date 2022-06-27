@@ -5,7 +5,7 @@ specifiers:
   '@flemist/async-utils': ^0.0.2
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
-  '@flemist/test-variants': 0.0.14
+  '@flemist/test-variants': 0.0.15
   '@rollup/plugin-alias': 3.1.9
   '@rollup/plugin-commonjs': '=21.1.0'
   '@rollup/plugin-json': 4.1.0
@@ -45,7 +45,7 @@ dependencies:
 devDependencies:
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
-  '@flemist/test-variants': 0.0.14
+  '@flemist/test-variants': 0.0.15
   '@rollup/plugin-alias': 3.1.9_rollup@2.75.7
   '@rollup/plugin-commonjs': 21.1.0_rollup@2.75.7
   '@rollup/plugin-json': 4.1.0_rollup@2.75.7
@@ -339,8 +339,8 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /@flemist/test-variants/0.0.14:
-    resolution: {integrity: sha512-s2CHX4D2wyeSNTi1wTkpB4HqAuNSlXxiwJwvbQwZCGUclfalOKJxnG5t20S9lMx0y4cGNe8MAptXboD6jYzDDg==}
+  /@flemist/test-variants/0.0.15:
+    resolution: {integrity: sha512-orhgZp3CBm0denbgIoiR+vA2Kd7nVpLfBilQfr0oVClhxO1alwFJgEDiTsrOa8jAnqpMesxATIgw2LSgTF9jfQ==}
     engines: {node: '>=10.4.0', pnpm: ^7.1.6}
     dependencies:
       tslib: 2.4.0

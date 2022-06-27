@@ -4,13 +4,19 @@ import {createTestVariants} from '@flemist/test-variants'
 describe('worker-server > main', function () {
   this.timeout(600000)
 
-  const testVariants = createTestVariants(function () {
-    return Promise.race([
-      test.apply(null, arguments),
-      new Promise((resolve, reject) => {
+  const testVariants = createTestVariants((args: {
+    funcName: string,
+    async: boolean,
+    error: boolean,
+    abort: false | 'error' | 'stop',
+    assert: boolean,
+  }) => {
+    return Promise.race<number|void>([
+      test(args),
+      new Promise<void>((resolve, reject) => {
         setTimeout(() => {
           reject('Timeout')
-        }, 20000)
+        }, 30000)
       }),
     ])
   })
@@ -26,6 +32,7 @@ describe('worker-server > main', function () {
   })
 
   it('stress', async function () {
+    let firstErrorEvent
     const promises: (Promise<number>|number)[] = []
     for (let i = 0; i < 10000; i++) {
       promises.push(testVariants({
@@ -34,8 +41,27 @@ describe('worker-server > main', function () {
         error   : [false, true],
         abort   : [false, 'error', 'stop'],
         assert  : [true],
-      })())
+      })({
+        onError(errorEvent) {
+          firstErrorEvent = errorEvent
+        },
+      }))
     }
-    console.log('variants: ' + (await Promise.all(promises)).reduce((a, o) => a + o, 0))
+    try {
+      console.log('variants: ' + (await Promise.all(promises)).reduce((a, o) => a + o, 0))
+    }
+    catch (err) {
+      if (!firstErrorEvent) {
+        console.log(`firstErrorEvent is null`)
+        throw err
+      }
+      console.error(`iteration: ${
+        firstErrorEvent.iteration
+      }}\r\n${
+        firstErrorEvent.variant
+      }}`)
+      console.error(firstErrorEvent.error)
+      throw firstErrorEvent.error
+    }
   })
 })
