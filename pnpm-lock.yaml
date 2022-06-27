@@ -5,7 +5,7 @@ specifiers:
   '@flemist/async-utils': ^0.0.2
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
-  '@flemist/test-variants': 0.0.15
+  '@flemist/test-variants': 0.0.16
   '@rollup/plugin-alias': 3.1.9
   '@rollup/plugin-commonjs': '=21.1.0'
   '@rollup/plugin-json': 4.1.0
@@ -45,7 +45,7 @@ dependencies:
 devDependencies:
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
-  '@flemist/test-variants': 0.0.15
+  '@flemist/test-variants': 0.0.16
   '@rollup/plugin-alias': 3.1.9_rollup@2.75.7
   '@rollup/plugin-commonjs': 21.1.0_rollup@2.75.7
   '@rollup/plugin-json': 4.1.0_rollup@2.75.7
@@ -307,7 +307,6 @@ packages:
     resolution: {integrity: sha512-ewpqfmNx+V5dqTzVBxi7syhhsFRk5ktNOd0d85tKyGkqwzoMyJSYGBPmycYhlUDSsIN/3Nb2EaE0tPOtfw6PNQ==}
     dependencies:
       tslib: 2.4.0
-    dev: false
 
   /@flemist/async-utils/0.0.2:
     resolution: {integrity: sha512-JoZo74naA0NxJDKwZgrB14/aX0slydL+oX9SJTJVqGW/3ugWPjJDh5XbcvQKGLligBz2FkN5SnQvS0mxJN6IDg==}
@@ -339,10 +338,11 @@ packages:
       tslib: 2.4.0
     dev: true
 
-  /@flemist/test-variants/0.0.15:
-    resolution: {integrity: sha512-orhgZp3CBm0denbgIoiR+vA2Kd7nVpLfBilQfr0oVClhxO1alwFJgEDiTsrOa8jAnqpMesxATIgw2LSgTF9jfQ==}
+  /@flemist/test-variants/0.0.16:
+    resolution: {integrity: sha512-piqTjaT/w5aTAGZyk9zued4nqvd8EsOLsfORMABy+vIpWgx1hWt0D5Anugum5oTPrZ7zUOi8g7aubH2wDiHQpw==}
     engines: {node: '>=10.4.0', pnpm: ^7.1.6}
     dependencies:
+      '@flemist/abort-controller-fast': 0.0.5
       tslib: 2.4.0
     dev: true
 

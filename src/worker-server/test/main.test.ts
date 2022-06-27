@@ -1,5 +1,7 @@
 import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
+import {delay} from '@flemist/async-utils'
+import {AbortControllerFast} from "@flemist/abort-controller-fast";
 
 describe('worker-server > main', function () {
   this.timeout(600000)
@@ -32,6 +34,7 @@ describe('worker-server > main', function () {
   })
 
   it('stress', async function () {
+    const abortController = new AbortControllerFast()
     let firstErrorEvent
     const promises: (Promise<number>|number)[] = []
     for (let i = 0; i < 10000; i++) {
@@ -45,12 +48,15 @@ describe('worker-server > main', function () {
         onError(errorEvent) {
           firstErrorEvent = errorEvent
         },
+        abortSignal: abortController.signal,
       }))
     }
     try {
       console.log('variants: ' + (await Promise.all(promises)).reduce((a, o) => a + o, 0))
     }
     catch (err) {
+      abortController.abort()
+      await delay(1000)
       if (!firstErrorEvent) {
         console.log(`firstErrorEvent is null`)
         throw err
