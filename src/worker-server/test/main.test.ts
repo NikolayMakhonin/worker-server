@@ -38,7 +38,7 @@ describe('worker-server > main', function () {
     })()
   })
 
-  it('stress', async function () {
+  xit('stress', async function () {
     const abortController = new AbortControllerFast()
     let firstErrorEvent
     const options = {

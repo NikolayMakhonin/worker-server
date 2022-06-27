@@ -1,6 +1,6 @@
 import {Callback, IUnsubscribe} from '../common/contracts'
 import {IAbortSignalFast} from '@flemist/abort-controller-fast'
-import {rejectAsResolve} from "@flemist/async-utils";
+import {rejectAsResolve} from '@flemist/async-utils'
 
 export function subscribeOnceAsPromise<TData = any, TError = Error>({
   subscribe,
