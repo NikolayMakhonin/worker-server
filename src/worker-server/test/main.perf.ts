@@ -8,9 +8,9 @@ describe('worker-server > main', function () {
   const testVariants = createTestVariants(function () {
     return Promise.race([
       test.apply(null, arguments),
-      // new Promise((resolve, reject) => {
+      // new Promise((resolve) => {
       //   setTimeout(() => {
-      //     reject('Timeout')
+      //     rejectAsResolve(resolve, 'Timeout')
       //   }, 5000)
       // }),
     ])
@@ -26,6 +26,7 @@ describe('worker-server > main', function () {
         error   : false,
         assert  : false,
         abort   : false,
+        options : null,
       })
       const time = rdtsc() - time0
       if (i === 0 || time < timeMin) {
@@ -45,6 +46,7 @@ describe('worker-server > main', function () {
         error   : false,
         assert  : false,
         abort   : false,
+        options : null,
       })
       const time = rdtsc() - time0
       if (i === 0 || time < timeMin) {
@@ -64,6 +66,7 @@ describe('worker-server > main', function () {
         error   : true,
         assert  : false,
         abort   : false,
+        options : null,
       })
       const time = rdtsc() - time0
       if (i === 0 || time < timeMin) {
@@ -83,6 +86,7 @@ describe('worker-server > main', function () {
         error   : false,
         assert  : false,
         abort   : false,
+        options : null,
       })
       const time = rdtsc() - time0
       if (i === 0 || time < timeMin) {
@@ -103,6 +107,7 @@ describe('worker-server > main', function () {
         error   : false,
         assert  : true,
         abort   : false,
+        options : null,
       }))
     }
     await Promise.all(promises)

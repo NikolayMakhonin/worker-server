@@ -1,5 +1,6 @@
 import {Callback, IUnsubscribe} from '../common/contracts'
 import {IAbortSignalFast} from '@flemist/abort-controller-fast'
+import {rejectAsResolve} from "@flemist/async-utils";
 
 export function subscribeOnceAsPromise<TData = any, TError = Error>({
   subscribe,
@@ -8,7 +9,7 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
   subscribe: (callback: Callback<TData, TError>) => IUnsubscribe,
   abortSignal?: IAbortSignalFast,
 }): Promise<TData> {
-  return new Promise<TData>((_resolve, _reject) => {
+  return new Promise<TData>((_resolve) => {
     if (abortSignal?.aborted) {
       throw abortSignal.reason
     }
@@ -33,7 +34,7 @@ export function subscribeOnceAsPromise<TData = any, TError = Error>({
 
     function reject(err: TError) {
       unsubscribe()
-      _reject(err)
+      rejectAsResolve(_resolve, err)
     }
 
     try {

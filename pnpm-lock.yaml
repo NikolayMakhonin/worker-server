@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@flemist/abort-controller-fast': ^0.0.5
-  '@flemist/async-utils': ^0.0.2
+  '@flemist/async-utils': ^0.0.3
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
   '@flemist/test-variants': 0.0.16
@@ -39,7 +39,7 @@ specifiers:
 
 dependencies:
   '@flemist/abort-controller-fast': 0.0.5
-  '@flemist/async-utils': 0.0.2
+  '@flemist/async-utils': 0.0.3
   tslib: 2.4.0
 
 devDependencies:
@@ -308,8 +308,8 @@ packages:
     dependencies:
       tslib: 2.4.0
 
-  /@flemist/async-utils/0.0.2:
-    resolution: {integrity: sha512-JoZo74naA0NxJDKwZgrB14/aX0slydL+oX9SJTJVqGW/3ugWPjJDh5XbcvQKGLligBz2FkN5SnQvS0mxJN6IDg==}
+  /@flemist/async-utils/0.0.3:
+    resolution: {integrity: sha512-fV9d6Y14HcLDDKd6QqmN3KFgRQMq2Gp9o+13OhWkrw9+xKZIQ9LL9MJ0GfLM8xDk9vtXdpXWc5e7ibtKmuTi+A==}
     engines: {node: '>=10.4.0', pnpm: ^7.1.6}
     dependencies:
       '@flemist/abort-controller-fast': 0.0.5

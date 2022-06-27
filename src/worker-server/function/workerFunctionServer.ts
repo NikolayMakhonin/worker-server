@@ -5,7 +5,7 @@ import {getNextId} from '../common/getNextId'
 import {workerSend} from '../request/workerSend'
 import {workerSubscribe} from '../request/workerSubscribe'
 import {AbortError, AbortControllerFast, IAbortSignalFast} from '@flemist/abort-controller-fast'
-import {combineAbortSignals} from '@flemist/async-utils'
+import {combineAbortSignals, rejectAsResolve} from '@flemist/async-utils'
 
 type ErrorSerialized = {
   error: any,
@@ -225,7 +225,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
     callback?: (data: WorkerData<TCallbackData>) => void,
   ): Promise<WorkerData<TResult>> {
     const abortController = new AbortControllerFast()
-    return new Promise<WorkerData<TResult>>((_resolve, _reject) => {
+    return new Promise<WorkerData<TResult>>((_resolve) => {
       if (abortSignal?.aborted) {
         reject(abortSignal.reason)
         return
@@ -254,7 +254,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
 
       function reject(err: Error) {
         unsubscribe()
-        _reject(err)
+        rejectAsResolve(_resolve, err)
       }
 
       function abort(this: IAbortSignalFast) {

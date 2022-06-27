@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-loop-func */
 import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
-import {delay} from '@flemist/async-utils'
+import {delay, rejectAsResolve} from '@flemist/async-utils'
 import {AbortControllerFast} from '@flemist/abort-controller-fast'
 
 describe('worker-server > main', function () {
@@ -19,10 +19,10 @@ describe('worker-server > main', function () {
   }) => {
     return Promise.race<number|void>([
       test(args),
-      new Promise<void>((resolve, reject) => {
+      new Promise<void>((resolve) => {
         setTimeout(() => {
-          reject('Timeout')
-        }, 600000)
+          rejectAsResolve(resolve, 'Timeout')
+        }, 30000)
       }),
     ])
   })
@@ -45,7 +45,7 @@ describe('worker-server > main', function () {
       globalMaxNotAbortedErrors: 5,
     }
     const promises: (Promise<number>|number)[] = []
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 5000; i++) {
       promises.push(testVariants({
         funcName: ['func1', 'func2', 'func3'],
         async   : [false, true],

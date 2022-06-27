@@ -78,7 +78,7 @@
   },
   "dependencies": {
     "@flemist/abort-controller-fast": "^0.0.5",
-    "@flemist/async-utils": "^0.0.2",
+    "@flemist/async-utils": "^0.0.3",
     "tslib": "^2.4.0"
   }
 }
