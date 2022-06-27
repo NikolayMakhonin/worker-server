@@ -12,6 +12,9 @@ describe('worker-server > main', function () {
     error: boolean,
     abort: false | 'error' | 'stop',
     assert: boolean,
+    options: {
+      globalMaxNotAbortedErrors?: number,
+    } | null,
   }) => {
     return Promise.race<number|void>([
       test(args),
@@ -30,12 +33,16 @@ describe('worker-server > main', function () {
       error   : [false, true],
       abort   : ['stop', 'error', false],
       assert  : [true],
+      options : [null],
     })()
   })
 
   it('stress', async function () {
     const abortController = new AbortControllerFast()
     let firstErrorEvent
+    const options = {
+      globalMaxNotAbortedErrors: 5,
+    }
     const promises: (Promise<number>|number)[] = []
     for (let i = 0; i < 10000; i++) {
       promises.push(testVariants({
@@ -44,6 +51,7 @@ describe('worker-server > main', function () {
         error   : [false, true],
         abort   : [false, 'error', 'stop'],
         assert  : [true],
+        options : [options],
       })({
         onError(errorEvent) {
           firstErrorEvent = errorEvent

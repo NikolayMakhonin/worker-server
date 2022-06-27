@@ -20,7 +20,7 @@ function func1(
   }
   if (data.data.async) {
     return (async () => {
-      await delay(1)
+      await delay(100)
       if (abortSignal.aborted) {
         // throw new Error('abort')
         const reason = (abortSignal as any).reason

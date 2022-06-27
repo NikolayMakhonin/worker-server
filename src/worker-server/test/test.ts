@@ -20,12 +20,16 @@ export async function test({
   error,
   abort,
   assert: _assert,
+  options,
 }: {
   funcName: string,
   async: boolean,
   error: boolean,
   abort: false | 'error' | 'stop',
   assert: boolean,
+  options: {
+    globalMaxNotAbortedErrors?: number,
+  } | null,
 }) {
   let id = nextId++
   console.debug(`=============== START ${id} ===============`)
@@ -130,6 +134,14 @@ export async function test({
 
   try {
     result = await promise
+    if (abortController.signal.aborted && abort !== 'stop' && async) {
+      if (options?.globalMaxNotAbortedErrors > 0) {
+        options.globalMaxNotAbortedErrors--
+      }
+      else {
+        assert.fail('func is not aborted')
+      }
+    }
   }
   catch (err) {
     assert.ok(err)
