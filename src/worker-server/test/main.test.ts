@@ -1,7 +1,7 @@
 import {test} from './test'
 import {createTestVariants} from '@flemist/test-variants'
 import {delay} from '@flemist/async-utils'
-import {AbortControllerFast} from "@flemist/abort-controller-fast";
+import {AbortControllerFast} from '@flemist/abort-controller-fast'
 
 describe('worker-server > main', function () {
   this.timeout(600000)
@@ -18,7 +18,7 @@ describe('worker-server > main', function () {
       new Promise<void>((resolve, reject) => {
         setTimeout(() => {
           reject('Timeout')
-        }, 30000)
+        }, 60000)
       }),
     ])
   })
@@ -56,7 +56,7 @@ describe('worker-server > main', function () {
     }
     catch (err) {
       abortController.abort()
-      await delay(1000)
+      await delay(10000)
       if (!firstErrorEvent) {
         console.log(`firstErrorEvent is null`)
         throw err
@@ -64,7 +64,7 @@ describe('worker-server > main', function () {
       console.error(`iteration: ${
         firstErrorEvent.iteration
       }}\r\n${
-        firstErrorEvent.variant
+        JSON.stringify(firstErrorEvent.variant, null, 2)
       }}`)
       console.error(firstErrorEvent.error)
       throw firstErrorEvent.error
