@@ -46,6 +46,7 @@ export type WorkerTaskFunc<TRequest, TResult, TCallbackData>
   = TaskFunc<WorkerData<TRequest>, WorkerData<TResult>, WorkerData<TCallbackData>>
 
 export type WorkerFunctionServerResult<TResult> = PromiseOrValue<WorkerData<TResult>>
+export type WorkerFunctionServerResultAsync<TResult> = Promise<WorkerData<TResult>>
 
 export type TaskFunctionRequest<TRequest = any> = {
   task: string,
@@ -72,15 +73,17 @@ export type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
 
 export type AbortFunc = (reason: any) => void
 
+export type WorkerFunctionServerEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<
+  TaskFunctionResponse<TResult, TCallbackData>,
+  TaskFunctionRequest<TRequest>
+>
+
 export function workerFunctionServer<TRequest = any, TResult = any, TCallbackData = any>({
   eventBus,
   task,
   name,
 }: {
-  eventBus: IWorkerEventBus<
-    TaskFunctionResponse<TResult, TCallbackData>,
-    TaskFunctionRequest<TRequest>
-  >,
+  eventBus: WorkerFunctionServerEventBus<TRequest, TResult, TCallbackData>,
   task: WorkerTaskFunc<TRequest, TResult, TCallbackData>,
   name?: string,
 }) {
@@ -202,8 +205,12 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
   })
 }
 
-export type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>
-  = (
+export type WorkerFunctionClientEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<
+  TaskFunctionRequest<TRequest>,
+  TaskFunctionResponse<TResult, TCallbackData>
+  >
+
+export type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = any> = (
   request: WorkerData<TRequest>,
   abortSignal?: IAbortSignalFast,
   callback?: (data: WorkerData<TCallbackData>) => void,
@@ -213,10 +220,7 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
   eventBus,
   name,
 }: {
-  eventBus: IWorkerEventBus<
-    TaskFunctionRequest<TRequest>,
-    TaskFunctionResponse<TResult, TCallbackData>
-  >,
+  eventBus: WorkerFunctionClientEventBus<TRequest, TResult, TCallbackData>,
   name: string,
 }) {
   function task(

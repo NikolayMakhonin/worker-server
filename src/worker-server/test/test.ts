@@ -1,6 +1,6 @@
 import {TestFunc} from './contracts'
 import {func1, func2, func3} from './main'
-import {WorkerData} from '../common/contracts'
+import {WorkerData} from 'src'
 import {AbortControllerFast, AbortError} from '@flemist/abort-controller-fast'
 
 function createArray(...values: number[]): Float32Array {
@@ -41,7 +41,7 @@ export async function test({
     result?: TValues,
     errorMessage?: string,
   }
-  
+
   let errorMessage = error ? (async ? 'func1' : funcName)
     : abort === 'error' && async ? 'abort'
       : void 0

@@ -1,7 +1,10 @@
 import {parentPort} from 'worker_threads'
-import {workerFunctionServer, WorkerFunctionServerResult} from '../function/workerFunctionServer'
-import {messagePortToEventBus} from '../event-bus/messagePortToEventBus'
-import {WorkerData} from '../common/contracts'
+import {
+  workerFunctionServer,
+  WorkerFunctionServerResult,
+  messagePortToEventBus,
+  WorkerData,
+} from 'src'
 import {TestFuncArgs} from './contracts'
 import {createTestFuncResult} from './helpers'
 import {delay} from '@flemist/async-utils'

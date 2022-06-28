@@ -1,8 +1,12 @@
 import {parentPort, workerData} from 'worker_threads'
-import {workerFunctionClient, workerFunctionServer, WorkerFunctionServerResult} from '../function/workerFunctionServer'
-import {messagePortToEventBus} from '../event-bus/messagePortToEventBus'
+import {
+  workerFunctionClient,
+  workerFunctionServer,
+  WorkerFunctionServerResult,
+  messagePortToEventBus,
+  WorkerData,
+} from 'src'
 import {TestFuncArgs} from './contracts'
-import {WorkerData} from '../common/contracts'
 import {createTestFuncResult} from './helpers'
 import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 

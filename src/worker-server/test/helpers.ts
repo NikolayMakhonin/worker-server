@@ -1,4 +1,4 @@
-import {WorkerData} from '../common/contracts'
+import {WorkerData} from 'src'
 
 export function createTestFuncResult(data: Float32Array): WorkerData<Float32Array> {
   return {

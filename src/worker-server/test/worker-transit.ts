@@ -1,10 +1,12 @@
 import {parentPort, Worker, workerData} from 'worker_threads'
-import {messagePortToEventBus} from '../event-bus/messagePortToEventBus'
+import {
+  messagePortToEventBus,
+  workerToEventBus,
+  eventBusConnect,
+  eventBusToMessagePort,
+  TaskFunctionRequest,
+} from 'src'
 import path from 'path'
-import {workerToEventBus} from '../event-bus/workerToEventBus'
-import {eventBusConnect} from '../event-bus/eventBusConnect'
-import {eventBusToMessagePort} from '../event-bus/eventBusToMessagePort'
-import {TaskFunctionRequest} from '../function/workerFunctionServer'
 
 const func1Port = workerData.func1Port
 const func1EventBus = messagePortToEventBus<TaskFunctionRequest>(func1Port)
