@@ -82,15 +82,19 @@ export function workerFunctionServer<TRequest = any, TResult = any, TCallbackDat
   eventBus,
   task,
   name,
+  debug,
 }: {
   eventBus: WorkerFunctionServerEventBus<TRequest, TResult, TCallbackData>,
   task: WorkerTaskFunc<TRequest, TResult, TCallbackData>,
   name?: string,
+  debug?: boolean,
 }) {
   const abortMap = new Map<string, AbortFunc>()
 
   return eventBus.subscribe(async (event) => {
-    console.debug('server: ', event)
+    if (debug) {
+      console.debug('server: ', event)
+    }
     function emitValue(data: WorkerData<TaskFunctionResponse<TResult, TCallbackData>>) {
       eventBus.emit(createWorkerEvent(
         data || {},
@@ -219,9 +223,11 @@ export type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = 
 export function workerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>({
   eventBus,
   name,
+  debug,
 }: {
   eventBus: WorkerFunctionClientEventBus<TRequest, TResult, TCallbackData>,
   name: string,
+  debug?: boolean,
 }) {
   function task(
     request: WorkerData<TRequest>,
@@ -290,14 +296,18 @@ export function workerFunctionClient<TRequest = any, TResult = any, TCallbackDat
           eventBus,
           requestId,
           callback(data, error) {
-            console.debug('client: ', data, error)
+            if (debug) {
+              console.debug('client: ', data, error)
+            }
             if (error) {
               reject(error)
               return
             }
             switch (data.data.event) {
               case 'started':
-                console.log('started: ' + name)
+                if (debug) {
+                  console.debug('started: ' + name)
+                }
                 break
               case 'error':
                 reject(deserializeError(data.data.error))

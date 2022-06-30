@@ -16,6 +16,7 @@ const func1EventBus = messagePortToEventBus(func1Port)
 const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: func1EventBus,
   name    : 'func1',
+  debug   : true,
 })
 
 function func3(
@@ -45,4 +46,5 @@ function func3(
 workerFunctionServer({
   eventBus: messagePortToEventBus(parentPort),
   task    : func3,
+  debug   : true,
 })

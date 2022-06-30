@@ -3,6 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var workerServer_errors_ExitError = require('../errors/ExitError.cjs');
+var workerServer_common_route = require('../common/route.cjs');
 
 function workerToEventBus(worker) {
     return {
@@ -12,6 +13,7 @@ function workerToEventBus(worker) {
             }
             function onMessageError(error) {
                 console.error(error);
+                callback({ error: error, route: [workerServer_common_route.ALL_CONNECTIONS] });
             }
             function onExit(code) {
                 if (code) {
@@ -20,6 +22,7 @@ function workerToEventBus(worker) {
                 else {
                     console.warn(`Exit code: ${code}`);
                 }
+                callback({ error: new workerServer_errors_ExitError.ExitError(code), route: [workerServer_common_route.ALL_CONNECTIONS] });
             }
             function onMessage(event) {
                 callback(event);

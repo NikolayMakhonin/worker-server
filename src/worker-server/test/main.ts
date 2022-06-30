@@ -11,6 +11,7 @@ const worker1EventBus = workerToEventBus(worker1)
 export const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: worker1EventBus,
   name    : 'func1',
+  debug   : true,
 })
 
 let func1Port = eventBusToMessagePort({
@@ -34,11 +35,13 @@ const workerTransitEventBus = workerToEventBus(workerTransit)
 export const func2 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: workerTransitEventBus,
   name    : 'func2',
+  debug   : true,
 })
 
 export const func3 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: workerTransitEventBus,
   name    : 'func3',
+  debug   : true,
 })
 
 export function terminateWorkers() {

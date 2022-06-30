@@ -46,4 +46,5 @@ function func1(
 workerFunctionServer({
   eventBus: messagePortToEventBus(parentPort),
   task    : func1,
+  debug   : true,
 })

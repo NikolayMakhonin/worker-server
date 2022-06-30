@@ -1,6 +1,7 @@
 import {Worker} from 'worker_threads'
 import {IUnsubscribe, IWorkerEventBus, WorkerEvent} from '../common/contracts'
 import {ExitError} from '../errors/ExitError'
+import {ALL_CONNECTIONS} from "src/worker-server/common/route";
 
 export function workerToEventBus<TRequestData = any, TResponseData = any>(
   worker: Worker,
@@ -12,6 +13,7 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
       }
       function onMessageError(error: Error) {
         console.error(error)
+        callback({error: error, route: [ALL_CONNECTIONS]})
       }
       function onExit(code: number) {
         if (code) {
@@ -20,6 +22,7 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
         else {
           console.warn(`Exit code: ${code}`)
         }
+        callback({error: new ExitError(code), route: [ALL_CONNECTIONS]})
       }
       function onMessage(event) {
         callback(event)

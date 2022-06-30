@@ -14,6 +14,7 @@ export declare type WorkerData<TData = any> = {
 };
 export declare type WorkerTaskFunc<TRequest, TResult, TCallbackData> = TaskFunc<WorkerData<TRequest>, WorkerData<TResult>, WorkerData<TCallbackData>>;
 export declare type WorkerFunctionServerResult<TResult> = PromiseOrValue<WorkerData<TResult>>;
+export declare type WorkerFunctionServerResultAsync<TResult> = Promise<WorkerData<TResult>>;
 export declare type TaskFunctionRequest<TRequest = any> = {
     task: string;
 } & ({
@@ -36,14 +37,16 @@ export declare type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
     error: ErrorSerialized;
 };
 export declare type AbortFunc = (reason: any) => void;
+export declare type WorkerFunctionServerEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<TaskFunctionResponse<TResult, TCallbackData>, TaskFunctionRequest<TRequest>>;
 export declare function workerFunctionServer<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, task, name, }: {
-    eventBus: IWorkerEventBus<TaskFunctionResponse<TResult, TCallbackData>, TaskFunctionRequest<TRequest>>;
+    eventBus: WorkerFunctionServerEventBus<TRequest, TResult, TCallbackData>;
     task: WorkerTaskFunc<TRequest, TResult, TCallbackData>;
     name?: string;
 }): IUnsubscribe;
+export declare type WorkerFunctionClientEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<TaskFunctionRequest<TRequest>, TaskFunctionResponse<TResult, TCallbackData>>;
 export declare type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = any> = (request: WorkerData<TRequest>, abortSignal?: IAbortSignalFast, callback?: (data: WorkerData<TCallbackData>) => void) => Promise<WorkerData<TResult>>;
 export declare function workerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, name, }: {
-    eventBus: IWorkerEventBus<TaskFunctionRequest<TRequest>, TaskFunctionResponse<TResult, TCallbackData>>;
+    eventBus: WorkerFunctionClientEventBus<TRequest, TResult, TCallbackData>;
     name: string;
 }): (request: WorkerData<TRequest>, abortSignal?: IAbortSignalFast, callback?: (data: WorkerData<TCallbackData>) => void) => Promise<WorkerData<TResult>>;
 export {};

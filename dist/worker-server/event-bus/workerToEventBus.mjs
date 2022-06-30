@@ -1,4 +1,5 @@
 import { ExitError } from '../errors/ExitError.mjs';
+import { ALL_CONNECTIONS } from '../common/route.mjs';
 
 function workerToEventBus(worker) {
     return {
@@ -8,6 +9,7 @@ function workerToEventBus(worker) {
             }
             function onMessageError(error) {
                 console.error(error);
+                callback({ error: error, route: [ALL_CONNECTIONS] });
             }
             function onExit(code) {
                 if (code) {
@@ -16,6 +18,7 @@ function workerToEventBus(worker) {
                 else {
                     console.warn(`Exit code: ${code}`);
                 }
+                callback({ error: new ExitError(code), route: [ALL_CONNECTIONS] });
             }
             function onMessage(event) {
                 callback(event);
