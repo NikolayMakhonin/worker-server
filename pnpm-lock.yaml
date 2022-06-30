@@ -2,7 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@flemist/abort-controller-fast': ^0.0.5
-  '@flemist/async-utils': ^0.0.3
+  '@flemist/async-utils': ^0.0.8
   '@flemist/copy-glob-flat': 0.0.5
   '@flemist/test-utils': 0.0.7
   '@flemist/test-variants': 0.0.16
@@ -21,7 +21,7 @@ specifiers:
   cpy-cli: '=3.1.1'
   eslint: 8.18.0
   eslint-config-pro: 3.0.15
-  eslint-nibble: ^8.0.2
+  eslint-nibble: 8.0.2
   fs-extra: 10.1.0
   globby: '=11.1.0'
   mocha: 9.2.2
@@ -39,7 +39,7 @@ specifiers:
 
 dependencies:
   '@flemist/abort-controller-fast': 0.0.5
-  '@flemist/async-utils': 0.0.3
+  '@flemist/async-utils': 0.0.8
   tslib: 2.4.0
 
 devDependencies:
@@ -308,8 +308,8 @@ packages:
     dependencies:
       tslib: 2.4.0
 
-  /@flemist/async-utils/0.0.3:
-    resolution: {integrity: sha512-fV9d6Y14HcLDDKd6QqmN3KFgRQMq2Gp9o+13OhWkrw9+xKZIQ9LL9MJ0GfLM8xDk9vtXdpXWc5e7ibtKmuTi+A==}
+  /@flemist/async-utils/0.0.8:
+    resolution: {integrity: sha512-BV98b5/6a5EefJBhT8aa6RVfrT0GNo3L+OlUeo38is8jVPlggejWilUuXFfDx+0gfpLD49VlYjdlLet2FD5kFQ==}
     engines: {node: '>=10.4.0', pnpm: ^7.1.6}
     dependencies:
       '@flemist/abort-controller-fast': 0.0.5

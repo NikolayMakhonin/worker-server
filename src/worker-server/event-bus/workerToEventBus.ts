@@ -1,7 +1,7 @@
 import {Worker} from 'worker_threads'
 import {IUnsubscribe, IWorkerEventBus, WorkerEvent} from '../common/contracts'
 import {ExitError} from '../errors/ExitError'
-import {ALL_CONNECTIONS} from "src/worker-server/common/route";
+import {ALL_CONNECTIONS} from 'src/worker-server/common/route'
 
 export function workerToEventBus<TRequestData = any, TResponseData = any>(
   worker: Worker,
