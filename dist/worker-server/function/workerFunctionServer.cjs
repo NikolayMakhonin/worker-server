@@ -27,10 +27,12 @@ function deserializeError(data) {
     }
     return data.error;
 }
-function workerFunctionServer({ eventBus, task, name, }) {
+function workerFunctionServer({ eventBus, task, name, debug, }) {
     const abortMap = new Map();
     return eventBus.subscribe((event) => tslib.__awaiter(this, void 0, void 0, function* () {
-        console.debug('server: ', event);
+        if (debug) {
+            console.debug('server: ', event);
+        }
         function emitValue(data) {
             eventBus.emit(workerServer_common_createWorkerEvent.createWorkerEvent(data || {}, void 0, event.route));
         }
@@ -122,7 +124,7 @@ function workerFunctionServer({ eventBus, task, name, }) {
         }
     }));
 }
-function workerFunctionClient({ eventBus, name, }) {
+function workerFunctionClient({ eventBus, name, debug, }) {
     function task(request, abortSignal, callback) {
         const abortController = new abortControllerFast.AbortControllerFast();
         return new Promise((_resolve) => {
@@ -176,14 +178,18 @@ function workerFunctionClient({ eventBus, name, }) {
                     eventBus,
                     requestId,
                     callback(data, error) {
-                        console.debug('client: ', data, error);
+                        if (debug) {
+                            console.debug('client: ', data, error);
+                        }
                         if (error) {
                             reject(error);
                             return;
                         }
                         switch (data.data.event) {
                             case 'started':
-                                console.log('started: ' + name);
+                                if (debug) {
+                                    console.debug('started: ' + name);
+                                }
                                 break;
                             case 'error':
                                 reject(deserializeError(data.data.error));

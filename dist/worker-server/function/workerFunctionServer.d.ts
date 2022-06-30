@@ -38,15 +38,17 @@ export declare type TaskFunctionResponse<TResult = any, TCallbackData = any> = {
 };
 export declare type AbortFunc = (reason: any) => void;
 export declare type WorkerFunctionServerEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<TaskFunctionResponse<TResult, TCallbackData>, TaskFunctionRequest<TRequest>>;
-export declare function workerFunctionServer<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, task, name, }: {
+export declare function workerFunctionServer<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, task, name, debug, }: {
     eventBus: WorkerFunctionServerEventBus<TRequest, TResult, TCallbackData>;
     task: WorkerTaskFunc<TRequest, TResult, TCallbackData>;
     name?: string;
+    debug?: boolean;
 }): IUnsubscribe;
 export declare type WorkerFunctionClientEventBus<TRequest = any, TResult = any, TCallbackData = any> = IWorkerEventBus<TaskFunctionRequest<TRequest>, TaskFunctionResponse<TResult, TCallbackData>>;
 export declare type WorkerFunctionClient<TRequest = any, TResult = any, TCallbackData = any> = (request: WorkerData<TRequest>, abortSignal?: IAbortSignalFast, callback?: (data: WorkerData<TCallbackData>) => void) => Promise<WorkerData<TResult>>;
-export declare function workerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, name, }: {
+export declare function workerFunctionClient<TRequest = any, TResult = any, TCallbackData = any>({ eventBus, name, debug, }: {
     eventBus: WorkerFunctionClientEventBus<TRequest, TResult, TCallbackData>;
     name: string;
+    debug?: boolean;
 }): (request: WorkerData<TRequest>, abortSignal?: IAbortSignalFast, callback?: (data: WorkerData<TCallbackData>) => void) => Promise<WorkerData<TResult>>;
 export {};
