@@ -1,0 +1,11 @@
+export { WorkerClient } from './WorkerClient.mjs';
+export { WorkerClientMT } from './WorkerClientMT.mjs';
+import 'tslib';
+import 'worker_threads';
+import '../worker-server/event-bus/workerToEventBus.mjs';
+import '../worker-server/errors/ExitError.mjs';
+import '../worker-server/common/route.mjs';
+import '../worker-server/common/getNextId.mjs';
+import '@flemist/abort-controller-fast';
+import '@flemist/async-utils';
+import 'path';
