@@ -3,6 +3,8 @@ export { eventBusToMessagePort } from './worker-server/event-bus/eventBusToMessa
 export { messagePortToEventBus } from './worker-server/event-bus/messagePortToEventBus.mjs';
 export { eventBusConnect } from './worker-server/event-bus/eventBusConnect.mjs';
 export { workerFunctionClient, workerFunctionServer } from './worker-server/function/workerFunctionServer.mjs';
+export { WorkerClient } from './worker-client/WorkerClient.mjs';
+export { WorkerClientMT } from './worker-client/WorkerClientMT.mjs';
 import './worker-server/errors/ExitError.mjs';
 import './worker-server/common/route.mjs';
 import 'worker_threads';
@@ -14,3 +16,4 @@ import './worker-server/request/workerSend.mjs';
 import './worker-server/request/workerSubscribe.mjs';
 import '@flemist/abort-controller-fast';
 import '@flemist/async-utils';
+import 'path';

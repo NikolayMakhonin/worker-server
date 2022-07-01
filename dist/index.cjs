@@ -7,6 +7,8 @@ var workerServer_eventBus_eventBusToMessagePort = require('./worker-server/event
 var workerServer_eventBus_messagePortToEventBus = require('./worker-server/event-bus/messagePortToEventBus.cjs');
 var workerServer_eventBus_eventBusConnect = require('./worker-server/event-bus/eventBusConnect.cjs');
 var workerServer_function_workerFunctionServer = require('./worker-server/function/workerFunctionServer.cjs');
+var workerClient_WorkerClient = require('./worker-client/WorkerClient.cjs');
+var workerClient_WorkerClientMT = require('./worker-client/WorkerClientMT.cjs');
 require('./worker-server/errors/ExitError.cjs');
 require('./worker-server/common/route.cjs');
 require('worker_threads');
@@ -18,6 +20,7 @@ require('./worker-server/request/workerSend.cjs');
 require('./worker-server/request/workerSubscribe.cjs');
 require('@flemist/abort-controller-fast');
 require('@flemist/async-utils');
+require('path');
 
 
 
@@ -27,3 +30,5 @@ exports.messagePortToEventBus = workerServer_eventBus_messagePortToEventBus.mess
 exports.eventBusConnect = workerServer_eventBus_eventBusConnect.eventBusConnect;
 exports.workerFunctionClient = workerServer_function_workerFunctionServer.workerFunctionClient;
 exports.workerFunctionServer = workerServer_function_workerFunctionServer.workerFunctionServer;
+exports.WorkerClient = workerClient_WorkerClient.WorkerClient;
+exports.WorkerClientMT = workerClient_WorkerClientMT.WorkerClientMT;
