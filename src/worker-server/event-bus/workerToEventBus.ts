@@ -44,7 +44,7 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
       return unsubscribe
     },
     emit(event: WorkerEvent<TRequestData>) {
-      worker.postMessage(event, event.data?.transferList)
+      worker.postMessage(event, event.data?.transferList?.filter(o => !(o instanceof SharedArrayBuffer)))
     },
   }
 }
