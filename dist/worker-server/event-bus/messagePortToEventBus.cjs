@@ -31,8 +31,8 @@ function messagePortToEventBus(messagePort) {
             return unsubscribe;
         },
         emit(event) {
-            var _a;
-            messagePort.postMessage(event, (_a = event.data) === null || _a === void 0 ? void 0 : _a.transferList);
+            var _a, _b;
+            messagePort.postMessage(event, (_b = (_a = event.data) === null || _a === void 0 ? void 0 : _a.transferList) === null || _b === void 0 ? void 0 : _b.filter(o => !(o instanceof SharedArrayBuffer)));
         },
     };
 }
