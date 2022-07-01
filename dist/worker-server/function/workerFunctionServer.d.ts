@@ -14,6 +14,7 @@ export declare type WorkerData<TData = any> = {
 };
 export declare type WorkerTaskFunc<TRequest, TResult, TCallbackData> = TaskFunc<WorkerData<TRequest>, WorkerData<TResult>, WorkerData<TCallbackData>>;
 export declare type WorkerFunctionServerResult<TResult> = PromiseOrValue<WorkerData<TResult>>;
+export declare type WorkerFunctionServerResultSync<TResult> = WorkerData<TResult>;
 export declare type WorkerFunctionServerResultAsync<TResult> = Promise<WorkerData<TResult>>;
 export declare type TaskFunctionRequest<TRequest = any> = {
     task: string;
