@@ -46,6 +46,7 @@ export type WorkerTaskFunc<TRequest, TResult, TCallbackData>
   = TaskFunc<WorkerData<TRequest>, WorkerData<TResult>, WorkerData<TCallbackData>>
 
 export type WorkerFunctionServerResult<TResult> = PromiseOrValue<WorkerData<TResult>>
+export type WorkerFunctionServerResultSync<TResult> = WorkerData<TResult>
 export type WorkerFunctionServerResultAsync<TResult> = Promise<WorkerData<TResult>>
 
 export type TaskFunctionRequest<TRequest = any> = {

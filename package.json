@@ -1,6 +1,6 @@
 {
   "name": "@flemist/worker-server",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TODO",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",

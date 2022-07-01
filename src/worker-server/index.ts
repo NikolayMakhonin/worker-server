@@ -11,6 +11,7 @@ export {eventBusConnect} from './event-bus/eventBusConnect'
 export type {
   WorkerFunctionClient,
   WorkerFunctionServerResult,
+  WorkerFunctionServerResultSync,
   WorkerFunctionServerResultAsync,
   TaskFunctionRequest,
   WorkerFunctionClientEventBus,
