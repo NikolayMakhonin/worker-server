@@ -13,9 +13,11 @@ export class WorkerClientPool<TClient extends IWorkerClient>
   protected constructor({
     createClient,
     threadsPool,
+    preInit,
   }: {
     createClient: () => Promise<TClient> | TClient,
     threadsPool: IPool,
+    preInit: boolean,
   }) {
     super({
       pool       : threadsPool,
@@ -25,6 +27,10 @@ export class WorkerClientPool<TClient extends IWorkerClient>
         return client.terminate()
       },
     })
+
+    if (preInit) {
+      void this.allocate()
+    }
   }
 
   async terminate(): Promise<void> {
