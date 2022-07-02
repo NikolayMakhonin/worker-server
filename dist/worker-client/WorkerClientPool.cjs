@@ -6,7 +6,7 @@ var tslib = require('tslib');
 var timeLimits = require('@flemist/time-limits');
 
 class WorkerClientPool extends timeLimits.ObjectPool {
-    constructor({ createClient, threadsPool, }) {
+    constructor({ createClient, threadsPool, preInit, }) {
         super({
             pool: threadsPool,
             holdObjects: true,
@@ -15,6 +15,9 @@ class WorkerClientPool extends timeLimits.ObjectPool {
                 return client.terminate();
             },
         });
+        if (preInit) {
+            void this.allocate();
+        }
     }
     terminate() {
         return tslib.__awaiter(this, void 0, void 0, function* () {
