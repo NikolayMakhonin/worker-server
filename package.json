@@ -1,6 +1,6 @@
 {
   "name": "@flemist/worker-server",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "TODO",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@flemist/copy-glob-flat": "0.0.5",
-    "@flemist/test-utils": "0.0.7",
+    "@flemist/test-utils": "0.0.9",
     "@flemist/test-variants": "0.0.16",
     "@rollup/plugin-alias": "3.1.9",
     "@rollup/plugin-commonjs": "=21.1.0",
@@ -60,7 +60,7 @@
     "@zerollup/ts-transform-paths": "1.7.18",
     "cpy-cli": "=3.1.1",
     "eslint": "8.18.0",
-    "eslint-config-pro": "3.0.15",
+    "eslint-config-pro": "3.0.16",
     "eslint-nibble": "8.0.2",
     "fs-extra": "10.1.0",
     "globby": "=11.1.0",
@@ -78,7 +78,9 @@
   },
   "dependencies": {
     "@flemist/abort-controller-fast": "^0.0.5",
-    "@flemist/async-utils": "^0.0.8",
+    "@flemist/async-utils": "^0.0.10",
+    "@flemist/priority-queue": "^0.0.5",
+    "@flemist/time-limits": "^0.0.2",
     "tslib": "^2.4.0"
   }
 }
