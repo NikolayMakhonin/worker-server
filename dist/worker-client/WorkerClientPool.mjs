@@ -15,6 +15,9 @@ class WorkerClientPool extends ObjectPool {
             void this.allocate();
         }
     }
+    init() {
+        return this.allocate();
+    }
     terminate() {
         return __awaiter(this, void 0, void 0, function* () {
             const promises = [];

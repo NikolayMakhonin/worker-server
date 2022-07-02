@@ -1,6 +1,6 @@
 import { IObjectPool, IPool, ObjectPool } from '@flemist/time-limits';
 import { IWorkerClient } from './contracts';
-interface IWorkerClientPool<TClient extends IWorkerClient> extends IObjectPool<TClient> {
+interface IWorkerClientPool<TClient extends IWorkerClient> extends IObjectPool<TClient>, IWorkerClient {
     terminate(): Promise<void>;
 }
 export declare class WorkerClientPool<TClient extends IWorkerClient> extends ObjectPool<TClient> implements IWorkerClientPool<TClient> {
@@ -9,6 +9,7 @@ export declare class WorkerClientPool<TClient extends IWorkerClient> extends Obj
         threadsPool: IPool;
         preInit: boolean;
     });
+    init(): Promise<void> | void;
     terminate(): Promise<void>;
 }
 export {};
