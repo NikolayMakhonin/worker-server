@@ -2,7 +2,7 @@ import {IObjectPool, IPool, ObjectPool} from '@flemist/time-limits'
 import {IWorkerClient} from './contracts'
 
 interface IWorkerClientPool<TClient extends IWorkerClient>
-extends IObjectPool<TClient> {
+extends IObjectPool<TClient>, IWorkerClient {
   terminate(): Promise<void>
 }
 
@@ -31,6 +31,10 @@ export class WorkerClientPool<TClient extends IWorkerClient>
     if (preInit) {
       void this.allocate()
     }
+  }
+
+  init(): Promise<void> | void {
+    return this.allocate() as any
   }
 
   async terminate(): Promise<void> {
