@@ -1,6 +1,6 @@
 {
   "name": "@flemist/worker-server",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "TODO",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -79,7 +79,7 @@
   "dependencies": {
     "@flemist/abort-controller-fast": "^0.0.5",
     "@flemist/async-utils": "^0.0.11",
-    "@flemist/time-limits": "^0.0.4",
+    "@flemist/time-limits": "^0.0.5",
     "tslib": "^2.4.0"
   }
 }
