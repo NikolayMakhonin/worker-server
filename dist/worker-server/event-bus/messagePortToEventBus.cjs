@@ -4,6 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var workerServer_errors_CloseError = require('../errors/CloseError.cjs');
 var workerServer_eventBus_helpers = require('./helpers.cjs');
+var workerServer_common_route = require('../common/route.cjs');
 
 function messagePortToEventBus(messagePort) {
     const listeners = {
@@ -11,7 +12,6 @@ function messagePortToEventBus(messagePort) {
         close: new Set(),
         message: new Set(),
     };
-    // optimization: you should have native subscriptions as few as possible, because it works very slowly
     messagePort.on('messageerror', workerServer_eventBus_helpers.createListener(listeners.messageerror));
     messagePort.on('close', workerServer_eventBus_helpers.createListener(listeners.close));
     messagePort.on('message', workerServer_eventBus_helpers.createListener(listeners.message));
@@ -21,10 +21,15 @@ function messagePortToEventBus(messagePort) {
             //   console.error(error)
             // }
             function onMessageError(error) {
+                unsubscribe();
                 console.error(error);
+                callback({ error, route: [workerServer_common_route.ALL_CONNECTIONS] });
             }
             function onClose() {
-                console.error(new workerServer_errors_CloseError.CloseError());
+                unsubscribe();
+                const error = new workerServer_errors_CloseError.CloseError();
+                console.error(error);
+                callback({ error, route: [workerServer_common_route.ALL_CONNECTIONS] });
             }
             function onMessage(event) {
                 callback(event);

@@ -9,7 +9,6 @@ function workerToEventBus(worker) {
         exit: new Set(),
         message: new Set(),
     };
-    // optimization: you should have native subscriptions as few as possible, because it works very slowly
     worker.on('error', createListener(listeners.error));
     worker.on('messageerror', createListener(listeners.messageerror));
     worker.on('exit', createListener(listeners.exit));
@@ -17,20 +16,25 @@ function workerToEventBus(worker) {
     return {
         subscribe(callback) {
             function onError(error) {
+                unsubscribe();
                 console.error(error);
+                callback({ error, route: [ALL_CONNECTIONS] });
             }
             function onMessageError(error) {
+                unsubscribe();
                 console.error(error);
-                callback({ error: error, route: [ALL_CONNECTIONS] });
+                callback({ error, route: [ALL_CONNECTIONS] });
             }
             function onExit(code) {
+                unsubscribe();
+                const error = new ExitError(code);
                 if (code) {
-                    console.error(new ExitError(code));
+                    console.error(error);
                 }
                 else {
                     console.warn(`Exit code: ${code}`);
                 }
-                callback({ error: new ExitError(code), route: [ALL_CONNECTIONS] });
+                callback({ error, route: [ALL_CONNECTIONS] });
             }
             function onMessage(event) {
                 callback(event);

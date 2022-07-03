@@ -7,8 +7,8 @@ var workerServer_eventBus_messagePortToEventBus = require('./messagePortToEventB
 var workerServer_eventBus_eventBusConnect = require('./eventBusConnect.cjs');
 require('../errors/CloseError.cjs');
 require('./helpers.cjs');
-require('../common/getNextId.cjs');
 require('../common/route.cjs');
+require('../common/getNextId.cjs');
 
 function eventBusToMessagePort({ server, requestFilter, }) {
     const channel = new worker_threads.MessageChannel();

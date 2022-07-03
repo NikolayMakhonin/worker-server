@@ -2,7 +2,7 @@ import {MessagePort} from 'worker_threads'
 import {IUnsubscribe, IWorkerEventBus, WorkerEvent} from '../common/contracts'
 import {CloseError} from '../errors/CloseError'
 import {createListener} from 'src/worker-server/event-bus/helpers'
-import {ALL_CONNECTIONS} from "src/worker-server/common/route";
+import {ALL_CONNECTIONS} from 'src/worker-server/common/route'
 
 export function messagePortToEventBus<TData = any>(messagePort: MessagePort): IWorkerEventBus<TData> {
   const listeners = {

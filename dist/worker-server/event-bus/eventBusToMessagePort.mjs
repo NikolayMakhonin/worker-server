@@ -3,8 +3,8 @@ import { messagePortToEventBus } from './messagePortToEventBus.mjs';
 import { eventBusConnect } from './eventBusConnect.mjs';
 import '../errors/CloseError.mjs';
 import './helpers.mjs';
-import '../common/getNextId.mjs';
 import '../common/route.mjs';
+import '../common/getNextId.mjs';
 
 function eventBusToMessagePort({ server, requestFilter, }) {
     const channel = new MessageChannel();

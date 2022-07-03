@@ -1,5 +1,6 @@
 import { CloseError } from '../errors/CloseError.mjs';
 import { createListener } from './helpers.mjs';
+import { ALL_CONNECTIONS } from '../common/route.mjs';
 
 function messagePortToEventBus(messagePort) {
     const listeners = {
@@ -7,7 +8,6 @@ function messagePortToEventBus(messagePort) {
         close: new Set(),
         message: new Set(),
     };
-    // optimization: you should have native subscriptions as few as possible, because it works very slowly
     messagePort.on('messageerror', createListener(listeners.messageerror));
     messagePort.on('close', createListener(listeners.close));
     messagePort.on('message', createListener(listeners.message));
@@ -17,10 +17,15 @@ function messagePortToEventBus(messagePort) {
             //   console.error(error)
             // }
             function onMessageError(error) {
+                unsubscribe();
                 console.error(error);
+                callback({ error, route: [ALL_CONNECTIONS] });
             }
             function onClose() {
-                console.error(new CloseError());
+                unsubscribe();
+                const error = new CloseError();
+                console.error(error);
+                callback({ error, route: [ALL_CONNECTIONS] });
             }
             function onMessage(event) {
                 callback(event);
