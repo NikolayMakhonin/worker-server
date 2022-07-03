@@ -51,7 +51,7 @@ describe('worker-server > main', function () {
     }
     const promises: (Promise<number>|number)[] = []
     for (let i = 0; i < 100; i++) {
-      promises.push(testVariants({
+      const promise = testVariants({
         funcName: ['func1', 'func2', 'func3'],
         async   : [false, true],
         error   : [false, true],
@@ -63,7 +63,11 @@ describe('worker-server > main', function () {
           firstErrorEvent = errorEvent
         },
         abortSignal: abortController.signal,
-      }))
+      })
+
+      // await promise
+
+      promises.push(promise)
     }
     try {
       console.log('variants: ' + (await Promise.all(promises)).reduce((a, o) => a + o, 0))

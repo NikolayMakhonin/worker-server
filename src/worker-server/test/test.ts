@@ -1,4 +1,4 @@
-import {TestFunc} from './contracts'
+import {DEBUG, TestFunc} from './contracts'
 import {func1, func2, func3} from './main'
 import {WorkerData} from 'src'
 import {AbortControllerFast, AbortError} from '@flemist/abort-controller-fast'
@@ -32,7 +32,9 @@ export async function test({
   } | null,
 }) {
   let id = nextId++
-  console.debug(`=============== START ${id} ===============`)
+  if (DEBUG) {
+    console.debug(`=============== START ${id} ===============`)
+  }
   type TValues = number[]
   const values: TValues = [10, 20, 30, id]
   let func: TestFunc
@@ -181,5 +183,7 @@ export async function test({
     }
   }
 
-  console.debug(`=============== END ${id} ===============`)
+  if (DEBUG) {
+    console.debug(`=============== END ${id} ===============`)
+  }
 }

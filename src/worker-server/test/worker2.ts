@@ -6,7 +6,7 @@ import {
   messagePortToEventBus,
   WorkerData,
 } from 'src'
-import {TestFuncArgs} from './contracts'
+import {DEBUG, TestFuncArgs} from './contracts'
 import {createTestFuncResult} from './helpers'
 import {IAbortSignalFast} from '@flemist/abort-controller-fast'
 
@@ -16,7 +16,7 @@ const func1EventBus = messagePortToEventBus(func1Port)
 const func1 = workerFunctionClient<TestFuncArgs, Float32Array>({
   eventBus: func1EventBus,
   name    : 'func1',
-  debug   : true,
+  debug   : DEBUG,
 })
 
 function func2(
@@ -46,5 +46,5 @@ function func2(
 workerFunctionServer({
   eventBus: messagePortToEventBus(parentPort),
   task    : func2,
-  debug   : true,
+  debug   : DEBUG,
 })

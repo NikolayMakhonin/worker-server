@@ -5,7 +5,7 @@ import {
   messagePortToEventBus,
   WorkerData,
 } from 'src'
-import {TestFuncArgs} from './contracts'
+import {DEBUG, TestFuncArgs} from './contracts'
 import {createTestFuncResult} from './helpers'
 import {delay} from '@flemist/async-utils'
 import {IAbortSignalFast} from '@flemist/abort-controller-fast'
@@ -46,5 +46,5 @@ function func1(
 workerFunctionServer({
   eventBus: messagePortToEventBus(parentPort),
   task    : func1,
-  debug   : true,
+  debug   : DEBUG,
 })
