@@ -2,6 +2,7 @@ import {MessagePort} from 'worker_threads'
 import {IUnsubscribe, IWorkerEventBus, WorkerEvent} from '../common/contracts'
 import {CloseError} from '../errors/CloseError'
 import {createListener} from 'src/worker-server/event-bus/helpers'
+import {ALL_CONNECTIONS} from "src/worker-server/common/route";
 
 export function messagePortToEventBus<TData = any>(messagePort: MessagePort): IWorkerEventBus<TData> {
   const listeners = {
@@ -10,7 +11,6 @@ export function messagePortToEventBus<TData = any>(messagePort: MessagePort): IW
     message     : new Set<(event: WorkerEvent<TData>) => void>(),
   }
 
-  // optimization: you should have native subscriptions as few as possible, because it works very slowly
   messagePort.on('messageerror', createListener(listeners.messageerror))
   messagePort.on('close', createListener(listeners.close))
   messagePort.on('message', createListener(listeners.message))
@@ -21,10 +21,15 @@ export function messagePortToEventBus<TData = any>(messagePort: MessagePort): IW
       //   console.error(error)
       // }
       function onMessageError(error: Error) {
+        unsubscribe()
         console.error(error)
+        callback({error, route: [ALL_CONNECTIONS]})
       }
       function onClose() {
-        console.error(new CloseError())
+        unsubscribe()
+        const error = new CloseError()
+        console.error(error)
+        callback({error, route: [ALL_CONNECTIONS]})
       }
       function onMessage(event) {
         callback(event)

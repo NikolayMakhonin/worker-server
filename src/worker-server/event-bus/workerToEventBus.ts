@@ -14,7 +14,6 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
     message     : new Set<(event: WorkerEvent<TResponseData>) => void>(),
   }
 
-  // optimization: you should have native subscriptions as few as possible, because it works very slowly
   worker.on('error', createListener(listeners.error))
   worker.on('messageerror', createListener(listeners.messageerror))
   worker.on('exit', createListener(listeners.exit))
@@ -23,20 +22,25 @@ export function workerToEventBus<TRequestData = any, TResponseData = any>(
   return {
     subscribe(callback: (event: WorkerEvent<TResponseData>) => void): IUnsubscribe {
       function onError(error: Error) {
+        unsubscribe()
         console.error(error)
+        callback({error, route: [ALL_CONNECTIONS]})
       }
       function onMessageError(error: Error) {
+        unsubscribe()
         console.error(error)
-        callback({error: error, route: [ALL_CONNECTIONS]})
+        callback({error, route: [ALL_CONNECTIONS]})
       }
       function onExit(code: number) {
+        unsubscribe()
+        const error = new ExitError(code)
         if (code) {
-          console.error(new ExitError(code))
+          console.error(error)
         }
         else {
           console.warn(`Exit code: ${code}`)
         }
-        callback({error: new ExitError(code), route: [ALL_CONNECTIONS]})
+        callback({error, route: [ALL_CONNECTIONS]})
       }
       function onMessage(event: WorkerEvent<TResponseData>) {
         callback(event)
