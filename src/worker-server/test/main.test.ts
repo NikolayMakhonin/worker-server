@@ -20,11 +20,11 @@ describe('worker-server > main', function () {
   }) => {
     return Promise.race<number|void>([
       test(args),
-      new Promise<void>((resolve) => {
-        setTimeout(() => {
-          rejectAsResolve(resolve, 'Timeout')
-        }, 60000)
-      }),
+      // new Promise<void>((resolve) => {
+      //   setTimeout(() => {
+      //     rejectAsResolve(resolve, 'Timeout')
+      //   }, 60000)
+      // }),
     ])
   })
 
