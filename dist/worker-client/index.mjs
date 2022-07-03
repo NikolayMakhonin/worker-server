@@ -5,6 +5,7 @@ import 'worker_threads';
 import '../worker-server/event-bus/workerToEventBus.mjs';
 import '../worker-server/errors/ExitError.mjs';
 import '../worker-server/common/route.mjs';
+import '../worker-server/event-bus/helpers.mjs';
 import '../worker-server/common/getNextId.mjs';
 import '@flemist/abort-controller-fast';
 import '@flemist/async-utils';

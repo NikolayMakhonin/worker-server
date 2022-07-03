@@ -11,6 +11,7 @@ require('@flemist/async-utils');
 var path = require('path');
 require('../worker-server/errors/ExitError.cjs');
 require('../worker-server/common/route.cjs');
+require('../worker-server/event-bus/helpers.cjs');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

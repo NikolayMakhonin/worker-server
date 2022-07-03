@@ -9,6 +9,7 @@ var workerServer_eventBus_eventBusConnect = require('./event-bus/eventBusConnect
 var workerServer_function_workerFunctionServer = require('./function/workerFunctionServer.cjs');
 require('./errors/ExitError.cjs');
 require('./common/route.cjs');
+require('./event-bus/helpers.cjs');
 require('worker_threads');
 require('./errors/CloseError.cjs');
 require('./common/getNextId.cjs');

@@ -5,6 +5,7 @@ export { eventBusConnect } from './event-bus/eventBusConnect.mjs';
 export { workerFunctionClient, workerFunctionServer } from './function/workerFunctionServer.mjs';
 import './errors/ExitError.mjs';
 import './common/route.mjs';
+import './event-bus/helpers.mjs';
 import 'worker_threads';
 import './errors/CloseError.mjs';
 import './common/getNextId.mjs';

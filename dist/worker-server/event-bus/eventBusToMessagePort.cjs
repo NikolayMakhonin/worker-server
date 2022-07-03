@@ -6,6 +6,7 @@ var worker_threads = require('worker_threads');
 var workerServer_eventBus_messagePortToEventBus = require('./messagePortToEventBus.cjs');
 var workerServer_eventBus_eventBusConnect = require('./eventBusConnect.cjs');
 require('../errors/CloseError.cjs');
+require('./helpers.cjs');
 require('../common/getNextId.cjs');
 require('../common/route.cjs');
 

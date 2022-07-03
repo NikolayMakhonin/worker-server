@@ -4,8 +4,20 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var workerServer_errors_ExitError = require('../errors/ExitError.cjs');
 var workerServer_common_route = require('../common/route.cjs');
+var workerServer_eventBus_helpers = require('./helpers.cjs');
 
 function workerToEventBus(worker) {
+    const listeners = {
+        error: new Set(),
+        messageerror: new Set(),
+        exit: new Set(),
+        message: new Set(),
+    };
+    // optimization: you should have native subscriptions as few as possible, because it works very slowly
+    worker.on('error', workerServer_eventBus_helpers.createListener(listeners.error));
+    worker.on('messageerror', workerServer_eventBus_helpers.createListener(listeners.messageerror));
+    worker.on('exit', workerServer_eventBus_helpers.createListener(listeners.exit));
+    worker.on('message', workerServer_eventBus_helpers.createListener(listeners.message));
     return {
         subscribe(callback) {
             function onError(error) {
@@ -28,16 +40,15 @@ function workerToEventBus(worker) {
                 callback(event);
             }
             function unsubscribe() {
-                worker.off('error', onError);
-                worker.off('messageerror', onMessageError);
-                worker.off('exit', onExit);
-                worker.off('message', onMessage);
+                listeners.error.delete(onError);
+                listeners.messageerror.delete(onMessageError);
+                listeners.exit.delete(onExit);
+                listeners.message.delete(onMessage);
             }
-            worker.setMaxListeners(100000);
-            worker.on('error', onError);
-            worker.on('messageerror', onMessageError);
-            worker.on('exit', onExit);
-            worker.on('message', onMessage);
+            listeners.error.add(onError);
+            listeners.messageerror.add(onMessageError);
+            listeners.exit.add(onExit);
+            listeners.message.add(onMessage);
             return unsubscribe;
         },
         emit(event) {

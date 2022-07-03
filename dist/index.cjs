@@ -11,6 +11,7 @@ var workerClient_WorkerClient = require('./worker-client/WorkerClient.cjs');
 var workerClient_WorkerClientPool = require('./worker-client/WorkerClientPool.cjs');
 require('./worker-server/errors/ExitError.cjs');
 require('./worker-server/common/route.cjs');
+require('./worker-server/event-bus/helpers.cjs');
 require('worker_threads');
 require('./worker-server/errors/CloseError.cjs');
 require('./worker-server/common/getNextId.cjs');

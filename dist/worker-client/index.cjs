@@ -9,6 +9,7 @@ require('worker_threads');
 require('../worker-server/event-bus/workerToEventBus.cjs');
 require('../worker-server/errors/ExitError.cjs');
 require('../worker-server/common/route.cjs');
+require('../worker-server/event-bus/helpers.cjs');
 require('../worker-server/common/getNextId.cjs');
 require('@flemist/abort-controller-fast');
 require('@flemist/async-utils');

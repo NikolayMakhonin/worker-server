@@ -7,6 +7,7 @@ export { WorkerClient } from './worker-client/WorkerClient.mjs';
 export { WorkerClientPool } from './worker-client/WorkerClientPool.mjs';
 import './worker-server/errors/ExitError.mjs';
 import './worker-server/common/route.mjs';
+import './worker-server/event-bus/helpers.mjs';
 import 'worker_threads';
 import './worker-server/errors/CloseError.mjs';
 import './worker-server/common/getNextId.mjs';

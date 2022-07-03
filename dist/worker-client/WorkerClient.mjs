@@ -7,6 +7,7 @@ import '@flemist/async-utils';
 import path from 'path';
 import '../worker-server/errors/ExitError.mjs';
 import '../worker-server/common/route.mjs';
+import '../worker-server/event-bus/helpers.mjs';
 
 class WorkerClient {
     constructor({ workerFilePath, preInit, options, }) {

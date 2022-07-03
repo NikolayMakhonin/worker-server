@@ -3,8 +3,18 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var workerServer_errors_CloseError = require('../errors/CloseError.cjs');
+var workerServer_eventBus_helpers = require('./helpers.cjs');
 
 function messagePortToEventBus(messagePort) {
+    const listeners = {
+        messageerror: new Set(),
+        close: new Set(),
+        message: new Set(),
+    };
+    // optimization: you should have native subscriptions as few as possible, because it works very slowly
+    messagePort.on('messageerror', workerServer_eventBus_helpers.createListener(listeners.messageerror));
+    messagePort.on('close', workerServer_eventBus_helpers.createListener(listeners.close));
+    messagePort.on('message', workerServer_eventBus_helpers.createListener(listeners.message));
     return {
         subscribe(callback) {
             // function onError(error: Error) {
@@ -20,14 +30,13 @@ function messagePortToEventBus(messagePort) {
                 callback(event);
             }
             function unsubscribe() {
-                messagePort.off('messageerror', onMessageError);
-                messagePort.off('close', onClose);
-                messagePort.off('message', onMessage);
+                listeners.messageerror.delete(onMessageError);
+                listeners.close.delete(onClose);
+                listeners.message.delete(onMessage);
             }
-            messagePort.setMaxListeners(100000);
-            messagePort.on('messageerror', onMessageError);
-            messagePort.on('close', onClose);
-            messagePort.on('message', onMessage);
+            listeners.messageerror.add(onMessageError);
+            listeners.close.add(onClose);
+            listeners.message.add(onMessage);
             return unsubscribe;
         },
         emit(event) {

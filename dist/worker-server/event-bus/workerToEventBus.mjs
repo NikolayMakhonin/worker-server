@@ -1,7 +1,19 @@
 import { ExitError } from '../errors/ExitError.mjs';
 import { ALL_CONNECTIONS } from '../common/route.mjs';
+import { createListener } from './helpers.mjs';
 
 function workerToEventBus(worker) {
+    const listeners = {
+        error: new Set(),
+        messageerror: new Set(),
+        exit: new Set(),
+        message: new Set(),
+    };
+    // optimization: you should have native subscriptions as few as possible, because it works very slowly
+    worker.on('error', createListener(listeners.error));
+    worker.on('messageerror', createListener(listeners.messageerror));
+    worker.on('exit', createListener(listeners.exit));
+    worker.on('message', createListener(listeners.message));
     return {
         subscribe(callback) {
             function onError(error) {
@@ -24,16 +36,15 @@ function workerToEventBus(worker) {
                 callback(event);
             }
             function unsubscribe() {
-                worker.off('error', onError);
-                worker.off('messageerror', onMessageError);
-                worker.off('exit', onExit);
-                worker.off('message', onMessage);
+                listeners.error.delete(onError);
+                listeners.messageerror.delete(onMessageError);
+                listeners.exit.delete(onExit);
+                listeners.message.delete(onMessage);
             }
-            worker.setMaxListeners(100000);
-            worker.on('error', onError);
-            worker.on('messageerror', onMessageError);
-            worker.on('exit', onExit);
-            worker.on('message', onMessage);
+            listeners.error.add(onError);
+            listeners.messageerror.add(onMessageError);
+            listeners.exit.add(onExit);
+            listeners.message.add(onMessage);
             return unsubscribe;
         },
         emit(event) {
